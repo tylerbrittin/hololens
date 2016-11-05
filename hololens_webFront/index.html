@@ -90,9 +90,17 @@
                     <h2>Create Listing</h2>
 
                     <hr class="star-primary">
+
+                    <button data-toggle="modal" data-target="#createModal" id="createbutton" type="button" class="btn btn-primary btn-lg"  onclick="resetSelect()">Create Custom Listing</button>
+
+                    &nbsp
+                    &nbsp
+
+                    <h2> OR <h2>
                     <h3>Select a category</h2>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-sm-4 portfolio-item">
                     <a href="#Furniture" class="portfolio-link" data-toggle="modal">
@@ -112,46 +120,6 @@
                             </div>
                         </div>
                         <img src="img/portfolio/book.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/circus.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/game.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/safe.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/submarine.png" class="img-responsive" alt="">
                     </a>
                 </div>
             </div>
@@ -534,3 +502,36 @@
 </body>
 
 </html>
+
+<div id="createModal" class="modal fade" role ="dialog">
+                <div class="modal-dialog modal-sm">
+                    <!--Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="text-align: center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Listing</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: left">
+                                <form name="myForm" style="text-align: center">
+                                 <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
+                                <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
+                                     &nbsp
+                                <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
+                                     &nbsp
+                                <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
+                                     &nbsp
+                                <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
+                                     &nbsp
+                                <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price">
+                                     &nbsp
+
+                                </form>
+                      
+                        <p id="pracName" style="padding-left:10px;"></p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="newListingButton" data-target="#listingModal" onclick="newlistingClick()" id="createListingButton">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
