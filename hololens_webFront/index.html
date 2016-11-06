@@ -96,6 +96,8 @@
                 &nbsp
                 &nbsp
 
+                <br />
+
 
                     <h2> OR <h2>
                    
@@ -446,9 +448,16 @@
                                          &nbsp
                                     <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
                                          &nbsp
-                                    <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
+                                    <select id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
+                                        <option selected disabled value="choose">--Category--</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="books">Books</option>
+                                        <option value="music">Music</option>
+                                </select>
                                          &nbsp
                                     <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Name">
+                                         &nbsp
+                                    <input id="itemDescripInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Description">
                                          &nbsp
                                     <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price - $xx.xx">
                                          &nbsp
