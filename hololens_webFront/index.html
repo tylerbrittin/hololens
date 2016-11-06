@@ -514,18 +514,22 @@
                         <div class="modal-body">
                             <div style="text-align: left">
                                 <form name="myForm" style="text-align: center">
-                                 <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
-                                <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
-                                     &nbsp
-                                <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
-                                     &nbsp
-                                <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
-                                     &nbsp
-                                <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
-                                     &nbsp
-                                <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price">
-                                     &nbsp
+                                     <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
+                                    <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
+                                         &nbsp
+                                    <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
+                                         &nbsp
+                                    <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
+                                         &nbsp
+                                    <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
+                                         &nbsp
+                                    <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price">
+                                         &nbsp
+                                 </form>
 
+                                 <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
+                                    <input type="file" name="fileToUpload" id="fileToUpload">
+                                    <input type="submit" value="Upload Image" name="submit">
                                 </form>
                       
                         <p id="pracName" style="padding-left:10px;"></p>
