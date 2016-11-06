@@ -71,9 +71,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="img/nebula_logo.PNG" alt="">
+                    <img class="img-responsive" src="img/nebula_logo_v2.PNG" alt="">
                     <div class="intro-text">
-                        <span class="name">Nebula</span>
+                        <!--<span class="name">Nebula</span> -->
                         <hr class="star-light">
                         <span class="skills">An Augmented Reality Storefront</span>
                     </div>
@@ -523,11 +523,15 @@
                                          &nbsp
                                     <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
                                          &nbsp
+                                    <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item">
+                                         &nbsp
                                     <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price">
                                          &nbsp
                                  </form>
 
-                                 <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
+
+
+                                <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
                                     <input type="file" name="fileToUpload" id="fileToUpload">
                                     <input type="submit" value="Upload Image" name="submit">
                                 </form>
