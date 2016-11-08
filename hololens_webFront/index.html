@@ -91,7 +91,7 @@
 
                     <hr class="star-primary">
 
-                    <button data-toggle="modal" data-target="#createModal" id="createbutton" type="button" class="btn btn-primary btn-lg"  onclick="resetSelect()">Create Custom Listing</button>
+                    <button data-toggle="modal" data-target="#createModal" id="createbutton" type="button" class="btn btn-primary btn-lg">Create Custom Listing</button>
 
                 &nbsp
                 &nbsp
@@ -306,7 +306,7 @@
                         -->
                         
                             <ul class="list-inline item-details">
-                                <button data-toggle="modal" data-target="#createModalF" id="createbutton" type="button" class="btn btn-primary btn-lg"  onclick="resetSelect()">Create a Furniture Listing</button>
+                                <button data-toggle="modal" data-target="#createModalF" id="createbutton" type="button" class="btn btn-primary btn-lg">Create a Furniture Listing</button>
 
                             </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
@@ -333,7 +333,7 @@
                             <img src="img/portfolio/book.jpg" class="img-responsive img-centered" alt="">
                             <p>Browse Books in 3D before buying. You don't know what you've been missing. </p>
                             <ul class="list-inline item-details">
-                                <button data-toggle="modal" data-target="#createModalB" id="createbutton" type="button" class="btn btn-primary btn-lg"  onclick="resetSelect()">Create a Book Listing</button>
+                                <button data-toggle="modal" data-target="#createModalB" id="createbutton" type="button" class="btn btn-primary btn-lg" >Create a Book Listing</button>
                             </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
@@ -360,7 +360,7 @@
                             <img src="img/portfolio/instruments.jpg" class="img-responsive img-centered" alt="">
                             <p>No only do instruments make beautiful music, they also look beautiful in 3D.</p>
                             <ul class="list-inline item-details">
-                                <button data-toggle="modal" data-target="#createModalM" id="createbutton" type="button" class="btn btn-primary btn-lg"  onclick="resetSelect()">Create a Music Listing</button>
+                                <button data-toggle="modal" data-target="#createModalM" id="createbutton" type="button" class="btn btn-primary btn-lg">Create a Music Listing</button>
                             </ul>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
@@ -440,47 +440,30 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: left">
-                                <form name="myForm" style="text-align: center">
-                                     <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
-                                    <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
-                                         &nbsp
-                                    <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
-                                         &nbsp
-                                    <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
-                                         &nbsp
-                                    <select id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
+
+                                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
+                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
+                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <select name="category" value="" class="form-control">
                                         <option selected disabled value="choose">--Category--</option>
                                         <option value="furniture">Furniture</option>
                                         <option value="books">Books</option>
                                         <option value="music">Music</option>
-                                </select>
-                                         &nbsp
-                                    <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Name">
-                                         &nbsp
-                                    <input id="itemDescripInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Description">
-                                         &nbsp
-                                    <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price - $xx.xx">
-                                         &nbsp
-                                 </form>
+                                    </select> &nbsp
+                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
 
-
-
-                                <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
-                                    <input type="file" name="fileToUpload" id="fileToUpload">
-                                    <input type="submit" value="Upload Image" name="submit">
+                                <div class="modal-footer">
+                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
+                                </div>
                                 </form>
-                      
-                        <p id="pracName" style="padding-left:10px;"></p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="newListingButton" data-target="#listingModal" onclick="newlistingClick()" id="createListingButton">Create</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
-
 
 <div id="createModalF" class="modal fade" role ="dialog">
                 <div class="modal-dialog modal-lg">
@@ -492,40 +475,31 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: left">
-                                <form name="myForm" style="text-align: center">
-                                     <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
-                                    <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
-                                         &nbsp
-                                    <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
-                                         &nbsp
-                                    <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
-                                         &nbsp
-                                    <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
-                                         &nbsp
-                                    <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Name">
-                                         &nbsp
-                                    <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price - $xx.xx">
-                                         &nbsp
-                                 </form>
 
+                                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
+                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
+                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <select name="category" value="" class="form-control">
+                                        <option selected disabled value="choose">Furniture</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="books">Books</option>
+                                        <option value="music">Music</option>
+                                    </select> &nbsp
+                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
 
-
-                                <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
-                                    <input type="file" name="fileToUpload" id="fileToUpload">
-                                    <input type="submit" value="Upload Image" name="submit">
+                                <div class="modal-footer">
+                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
+                                </div>
                                 </form>
-                      
-                        <p id="pracName" style="padding-left:10px;"></p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="newListingButton" data-target="#listingModal" onclick="newlistingClick()" id="createListingButton">Create</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
-            
+
 <div id="createModalB" class="modal fade" role ="dialog">
                 <div class="modal-dialog modal-lg">
                     <!--Modal content-->
@@ -536,39 +510,29 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: left">
-                                <form name="myForm" style="text-align: center">
-                                     <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
-                                    <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
-                                         &nbsp
-                                    <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
-                                         &nbsp
-                                    <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
-                                         &nbsp
-                                    <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
 
-                                         &nbsp
-                                    <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Name">
-                                         &nbsp
-                                    <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price - $xx.xx">
-                                         &nbsp
-                                 </form>
+                                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
+                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
+                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <select name="category" value="" class="form-control">
+                                        <option selected disabled value="choose">Books</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="books">Books</option>
+                                        <option value="music">Music</option>
+                                    </select> &nbsp
+                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
 
-
-
-                                <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
-                                    <input type="file" name="fileToUpload" id="fileToUpload">
-                                    <input type="submit" value="Upload Image" name="submit">
+                                <div class="modal-footer">
+                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
+                                </div>
                                 </form>
-                      
-                        <p id="pracName" style="padding-left:10px;"></p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="newListingButton" data-target="#listingModal" onclick="newlistingClick()" id="createListingButton">Create</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div id="createModalM" class="modal fade" role ="dialog">
@@ -581,37 +545,61 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: left">
-                                <form name="myForm" style="text-align: center">
-                                     <input id="firstNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="First Name">
-                                    <!--<label id="NAMEerror" style="font-weight:normal !important; font-size: 85%; color: orange; visibility: hidden">Name is required to search for agent</label>-->
-                                         &nbsp
-                                    <input id="lastNameInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Last Name">
-                                         &nbsp
-                                    <input id="emailInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Contact Email">
-                                         &nbsp
-                                    <input id="categoryInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Category">
 
-                                         &nbsp
-                                    <input id="itemInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Item Name">
-                                         &nbsp
-                                    <input id="priceInput" type="text" class="form-control" oninput="removeError(this)" placeholder="Price - $xx.xx">
-                                         &nbsp
-                                 </form>
+                                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
+                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
+                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <select name="category" value="" class="form-control">
+                                        <option selected disabled value="choose">Music</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="books">Books</option>
+                                        <option value="music">Music</option>
+                                    </select> &nbsp
+                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
 
-
-
-                                <form action="upload.php" method="post" enctype="multipart/form-data"> Select image to upload:
-                                    <input type="file" name="fileToUpload" id="fileToUpload">
-                                    <input type="submit" value="Upload Image" name="submit">
+                                <div class="modal-footer">
+                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
+                                </div>
                                 </form>
-                      
-                        <p id="pracName" style="padding-left:10px;"></p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="newListingButton" data-target="#listingModal" onclick="newlistingClick()" id="createListingButton">Create</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+
+
+                 <script>
+                                var form = document.forms['form'];
+
+                                form.onsubmit = function (e) {
+                                    //stop regular form submission
+                                    e.preventDefault();
+
+                                    //collect the form data 
+                                    var data = {};
+                                    for (var i = 0, ii = form.length; i <ii; ++i) {
+                                        var input = form[i];
+                                        if (input.name) {
+                                            data[input.name] = input.value;
+                                        }
+                                    }
+
+                                    //construct an HTTP request
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open(form.method, form.action, true);
+                                    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+                                    //send the collected data as JSON
+                                    xhr.send(JSON.stringify(data));
+
+                                    console.log(JSON.stringify(data));
+
+                                    xhr.onloadend = function () {
+                                        //done
+                                    };
+                                };
+
+                </script>
