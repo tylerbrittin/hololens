@@ -21,13 +21,13 @@ var routes = Routes{
   Route{
     "AddObject",
     "POST",
-    "/addObject",
-    AddObject,
+    "/additem",
+    AddItem,
   },
   Route{
     "GetBooks",
     "GET",
-    "/getBooks",
-    GetBooks,
+    "/getitems/{collName}",
+    GetItems,
   },
 }

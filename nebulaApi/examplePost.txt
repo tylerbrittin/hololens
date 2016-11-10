@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -d '{ "category" : "music", "seller" : "Wu Tang", "price" : "$10000", "model" : "serialzied new new album", "email" : "newemail@newemail", "item" : "new new album", "itemdesc" : "used" }' localhost:5073/addobject

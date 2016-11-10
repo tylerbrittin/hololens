@@ -11,9 +11,10 @@ import (
 type Item struct {
   ID            bson.ObjectId `bson:"_id,omitempty"`
   Category      string
-  Name          string
+  Item          string
+  ItemDesc      string
   Seller        string
-  Contact       string
+  Email         string
   Price         string
   Model         string
 }
@@ -49,4 +50,23 @@ func GetColl(s *mgo.Session, collName string) []Item {
   }
 
   return results
+}
+
+// Insert an item into MongoDB
+func InsertItem(s *mgo.Session, i Item) bool {
+  collName := i.Category
+  defer s.Close()
+
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("nebula").C(collName)
+
+  err := c.Insert(i)
+
+  res := false
+  if err != nil {
+    res = true
+  }
+
+  return res
 }
