@@ -13,18 +13,33 @@
                             }
                         }
 
+           //console.log(JSON.stringify(data));
                         //construct an HTTP request
-                        var url = '40.87.66.169:5073/additem'
-                        var xhr = new XMLHttpRequest();
+                        var url = 'http://40.87.66.169:5073/additem'
+                        /*var xhr = new XMLHttpRequest();
                         xhr.open(form.method, url, true);
                         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
                         //send the collected data as JSON
                         xhr.send(JSON.stringify(data));
 
-                        //console.log(JSON.stringify(data));
+                        console.log(JSON.stringify(data));
 
-                        xhr.onloadend = function () {
-                        //done
-                    };
+                        xhr.onloadend = function () {*/
+
+                        
+
+
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: JSON.stringify(data),
+                                contentType: "application/json",
+                                dataType: 'json',
+                            });
+
+                        //console.log(JSON.stringify(data))
+                        //console.log(url);
+
                 };
+
