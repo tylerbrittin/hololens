@@ -35,7 +35,7 @@
                                 type: 'POST',
                                 data: JSON.stringify(data),
                                 contentType: "application/json",
-                                dataType: 'json',
+                                dataType: 'jsonp',
                             });
 
                         //console.log(JSON.stringify(data))
