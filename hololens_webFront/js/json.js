@@ -32,10 +32,11 @@
 
                             $.ajax({
                                 url: url,
+                                crossDomain: true,
                                 type: 'POST',
                                 data: JSON.stringify(data),
                                 contentType: "application/json",
-                                dataType: 'jsonp',
+                                dataType: 'json',
                             });
 
                         //console.log(JSON.stringify(data))
