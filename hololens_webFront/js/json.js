@@ -32,15 +32,56 @@
                                     alert("error");
                                 }
                             });
-
-                        response = HttpResponse(json.dumps('{"status" : "success"}'))
-                        response.__setitem__("Content-type", "application/json")
-                        response.__setitem__("Access-Control-Allow-Origin", "*")
-
-                        return response
-
                         //console.log(JSON.stringify(data))
                         //console.log(url);
+
+                    (function (window) {
+  function CorsAjax() {
+    this.post = function(url, data, callback) {
+      $.support.cors = true;
+      var jqxhr = $.post(url, data, callback, "json")
+             .error(function(jqXhHR, status, errorThrown) {
+               if ($.browser.msie && window.XDomainRequest) {
+                   var xdr = new XDomainRequest();
+                   xdr.open("post", url);
+                   xdr.onload = function () {
+                    if (callback) {
+                     callback(
+                      JSON.parse(this.responseText), 
+                      'success');
+                    }
+                  };
+                  xdr.send(data);
+               } else {
+                 alert("corsAjax.post error: " + status + ", " + errorThrown);
+               }
+      });
+    };
+
+    this.get = function(url, callback) {
+        $.support.cors = true;
+        var jqxhr = $.get(url, null, callback, "json")
+               .error(function(jqXhHR, status, errorThrown) {
+                  if ($.browser.msie && window.XDomainRequest) {
+                    var xdr = new XDomainRequest();
+                    xdr.open("get", url);
+                    xdr.onload = function () {
+                     if (callback) {
+                      callback(
+                       JSON.parse(this.responseText), 
+                       'success');
+                     }
+                    };
+                    xdr.send();
+                  } else {
+                    alert("corsAjax.get error: " + status + ", " + errorThrown);
+                  }
+                });
+        };
+    };
+
+    window.corsAjax = new CorsAjax();
+})(window);
 
                 };
 
