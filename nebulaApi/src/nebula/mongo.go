@@ -7,7 +7,7 @@ import (
   "os"
 )
 
-// Struct for a Nebula object
+// Struct for a detailed Nebula object
 type Item struct {
   ID            bson.ObjectId `bson:"_id,omitempty"`
   Category      string
@@ -16,6 +16,13 @@ type Item struct {
   Seller        string
   Email         string
   Price         string
+  Model         string
+}
+
+// Struct for a simple Nebula object
+type Simple struct {
+  ID            bson.ObjectId `bson:"_id,omitempty"`
+  Item          string
   Model         string
 }
 
@@ -30,7 +37,7 @@ func GetSession() *mgo.Session {
 }
 
 // Get an entire collection
-func GetColl(s *mgo.Session, collName string) []Item {
+func GetColl(s *mgo.Session, collName string) []Simple {
   if s == nil {
     log.Printf("FATAL: Can not access MongoDB! Application Closing!")
     os.Exit(1)
@@ -41,7 +48,7 @@ func GetColl(s *mgo.Session, collName string) []Item {
 
   c := s.DB("nebula").C(collName)
 
-  var results []Item
+  var results []Simple
   err := c.Find(nil).All(&results)
 
   if err != nil {
@@ -50,6 +57,29 @@ func GetColl(s *mgo.Session, collName string) []Item {
   }
 
   return results
+}
+
+// Get individual item details
+func GetItemDets(s *mgo.Session, collName string, id string) Item {
+  if s == nil {
+    log.Printf("FATAL: Can not access MongoDB! Application Closing!")
+    os.Exit(1)
+  }
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("nebula").C(collName)
+
+  var result Item
+  err := c.FindId(bson.ObjectIdHex(id)).One(&result)
+
+  if err != nil {
+    log.Printf("FATAL: Can not access "+collName+" collection to get item! Application Closing!")
+    os.Exit(1)
+  }
+
+  return result
 }
 
 // Insert an item into MongoDB
@@ -69,4 +99,5 @@ func InsertItem(s *mgo.Session, i Item) bool {
   }
 
   return res
+
 }
