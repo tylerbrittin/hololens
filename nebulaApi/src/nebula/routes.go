@@ -25,9 +25,15 @@ var routes = Routes{
     AddItem,
   },
   Route{
-    "GetBooks",
+    "GetItems",
     "GET",
     "/getitems/{collName}",
     GetItems,
+  },
+  Route{
+    "GetDetails",
+    "GET",
+    "/getdetails/{collName}/{id}",
+    GetDetails,
   },
 }

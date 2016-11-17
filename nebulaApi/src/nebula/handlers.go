@@ -11,18 +11,19 @@ import (
   "os"
 )
 
-type Respon struct {
-  Result      string
-  Message     string
-}
+//type Respon struct {
+//  Result      string
+//  Message     string
+//}
 
-var items []Item
+var simpItems []Simple
+var detItem Item
 var postItem Item
 
 // Index Handler
 func Index(w http.ResponseWriter, r *http.Request) {
   fmt.Fprint(w, "Welcome! This is the API for the Nebula Shopping portal!\n")
-  fmt.Fprint(w, "Current version: 1.0\n")
+  fmt.Fprint(w, "Current version: 1.2\n")
 }
 
 // Handler for adding object to DB - POST request
@@ -52,23 +53,24 @@ func AddItem(w http.ResponseWriter, r *http.Request) {
   session := GetSession()
   res := InsertItem(session, postItem)
 
+  w.Header().Set("Access-Control-Allow-Origin", "http://nebulashop.net")
+  w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+  w.Header().Set("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Content-Type")
+
   // Return appropriate HTTP code
   if res == true {
     log.Println("ERROR: Failed to insert JSON into Mongo!")
-    myres := &Respon{
-      Result: "Failed",
-      Message: "Failed to insert JSON"}
-    SendResponse(w, myres, res)
+    SendResponse(w, res)
   } else {
     log.Println("INFO: JSON successfully inserted")
-    myres := &Respon{
-      Result: "Success",
-      Message: "Successfuly inserted JSON"}
-    SendResponse(w, myres, res)
+    //myres := &Respon{
+      //Result: "Success",
+      //Message: "Successfuly inserted JSON"}
+    SendResponse(w, res)
   }
 }
 
-// Handler for Books
+// Handler for matching items
 func GetItems(w http.ResponseWriter, r *http.Request) { 
   session := GetSession()
 
@@ -80,24 +82,52 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
   vars := mux.Vars(r)
   collName := vars["collName"]
 
-  items = GetColl(session, collName)
+  simpItems = GetColl(session, collName)
+ 
+  w.Header().Set("Access-Control-Allow-Origin", "http://nebulashop.net")
+  w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+  w.Header().Set("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Content-Type")
 
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   w.WriteHeader(http.StatusOK)
-  if err := json.NewEncoder(w).Encode(items); err != nil {
+  if err := json.NewEncoder(w).Encode(simpItems); err != nil {
+    log.Println("ERROR: Unable to properly encode items from MongoDB as JSON!")
+  }
+}
+
+// Handler for item details
+func GetDetails(w http.ResponseWriter, r *http.Request) {
+  session := GetSession()
+
+  if session == nil {
+    log.Println("ERROR: FATAL: Unable to get MongoDB Connection. Exiting!")
+    os.Exit(1)
+  }
+
+  vars := mux.Vars(r)
+  collName := vars["collName"]
+  id := vars["id"]
+
+  detItem = GetItemDets(session, collName, id)
+
+  w.Header().Set("Access-Control-Allow-Origin", "http://nebulashop.net")
+  w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+  w.Header().Set("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Content-Type")
+
+  w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+  w.WriteHeader(http.StatusOK)
+  if err := json.NewEncoder(w).Encode(detItem); err != nil {
     log.Println("ERROR: Unable to properly encode items from MongoDB as JSON!")
   }
 }
 
 // Helper Function for sending response after POST
-func SendResponse(w http.ResponseWriter, myr *Respon, res bool) {
+func SendResponse(w http.ResponseWriter, res bool) {
   if res == true {
     w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-    w.WriteHeader(http.StatusBadRequest)
-    json.NewEncoder(w).Encode(myr)
+    w.WriteHeader(http.StatusBadRequest) 
   } else {
     w.Header().Set("Content-Type", "application/json; charset=UTF-8")
     w.WriteHeader(http.StatusCreated)
-    json.NewEncoder(w).Encode(myr) 
   }
 }
