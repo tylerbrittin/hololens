@@ -51,13 +51,19 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Product Templates</a>
+                        <a href="#portfolio">Create a listing</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#about">About</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#contact">Contact</a>
+                    </li>
+                    
+                    <li
+                    
+                    
+                    <button data-toggle="modal" data-target="#createModala" id="createbutton" type="button" class="btn btn-primary btn-lg">Create Account</button>
                     </li>
                 </ul>
             </div>
@@ -93,6 +99,7 @@
 
                     <button data-toggle="modal" data-target="#createModal" id="createbutton" type="button" class="btn btn-primary btn-lg">Create Custom Listing</button>
 
+                   
                 &nbsp
                 &nbsp
 
@@ -501,6 +508,80 @@
 
                                 <div class="modal-footer">
                                     <button class="btn btn-default">Submit</button>
+                                </div>
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<div id="createModala" class="modal fade" role ="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!--Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="text-align: center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New account</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: left">
+
+                                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                                    <input name="name" value="" type="text" class="form-control" placeholder="First and Last Name"> &nbsp
+                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <input name="pw" value="" type="password" class="form-control" placeholder="Password"> &nbsp
+                                    <input name="pw2" value="" type="password" class="form-control" placeholder="Confirm password"> &nbsp
+                                    &nbsp
+                                    
+
+                              <!--  <form id="upload" action="upload.php" method="POST" enctype="multipart/form-data">
+                                    <fieldset>
+
+                                        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+                                        <div>
+                                            <label for="fileselect">Files to upload:</label>
+                                            <input type="file" id="fileselect" name"fileselect[]" multiple="multiple" />
+                                            <div id="filedrag">or drop files here</div>
+                                        </div>
+
+                                        <div id="submitbutton">
+                                            <button type="submit">Upload Files</button>
+                                    </fieldset>
+                                </form>
+
+                                <div id="messages">
+                                    <p>Status</p>
+                                </div>
+
+                                <style>
+                                #filedrag
+                                {
+                                    display: none;
+                                    font-weight: bold;
+                                    text-align: center;
+                                    padding: 1em 0;
+                                    margin: 1em 0;
+                                    color: #555;
+                                    border: 2px dashed #555;
+                                    border-radius: 7px;
+                                    cursor: default;
+                                }
+
+                                #filedrag.hover
+                                {
+                                    color: #f00;
+                                    border-color: #f00;
+                                    border-style: solid;
+                                    box-shadow: inset 0 3px 4px #888;
+                                }
+
+                                </style>-->
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-default">Create</button>
                                 </div>
                                 </form>
                     </div>
