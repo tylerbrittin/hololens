@@ -26,8 +26,7 @@ $(document).ready(function() {
 				id: 'img',
 				src: 'x/png',
 				alt: 'delete'
-
-				)}.click(function() {
+				}).click(function() {
 					$(this).parent().parent().remove();
 				}));
 	}
@@ -41,7 +40,7 @@ $(document).ready(function() {
 		var name = $(":file").val();
 		if (!name) {
 			alert("First Image Must Be Selected");
-			e.preventDefault()l
+			e.preventDefault();
 		}
 	});
 
