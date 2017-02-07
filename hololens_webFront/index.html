@@ -50,9 +50,9 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
+                   <!-- <li class="page-scroll">
                         <a href="#portfolio">Product Templates</a>
-                    </li>
+                    </li>-->
                     <li class="page-scroll">
                         <a href="#about">About</a>
                     </li>
@@ -99,7 +99,7 @@
                 <br />
 
 
-                    <h2> OR <h2>
+                  <!--  <h2> OR <h2>
                    
                     <h3>Select a category</h2>
 
@@ -145,7 +145,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     </section>
 
@@ -282,7 +282,7 @@
         </a>
     </div>
 
-    <!-- Portfolio Modals -->
+    <!-- Portfolio Modals 
     <div class="portfolio-modal modal fade" id="Furniture" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -300,10 +300,10 @@
                             <img src="img/portfolio/couch.jpg" class="img-responsive img-centered" alt="">
                             
                             <p>Couches, chairs, tables, you name it. We have it all in amazing 3D. </p>
-                        <!--
+                        
                             <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
 
-                        -->
+                        
                         
                             <ul class="list-inline item-details">
                                 <button data-toggle="modal" data-target="#createModalF" id="createbutton" type="button" class="btn btn-primary btn-lg">Create a Furniture Listing</button>
@@ -368,7 +368,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
@@ -407,7 +407,7 @@
             </div>
         </div>
     </div>
-    
+    -->
     
 
     <!-- jQuery -->
@@ -455,49 +455,96 @@
                                     <input name="model" value="" type="text" class="form-control" placeholder="Model"> &nbsp
                                     <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
 
-                              <!--  <form id="upload" action="upload.php" method="POST" enctype="multipart/form-data">
-                                    <fieldset>
 
-                                        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+                        <h2> Image Upload </h2>
+                        <form enctype = "multipart/form-data" action="" method="post">
+                            Only JPEG, PNG, JPG types allowed. Image size should be less than 100KB.
+                            <br/><br/>
+                            <div id="filediv"><input name="file[]" type="file" id="file"/></div>
+                            <br/><br/>
+                            <input type="button" id="add_more" class="upload" value="Add More Files"/>
+                            <input type="submit" value="Upload File" name="submit" id="upload" class="upload"/>
+                        </form>
 
-                                        <div>
-                                            <label for="fileselect">Files to upload:</label>
-                                            <input type="file" id="fileselect" name"fileselect[]" multiple="multiple" />
-                                            <div id="filedrag">or drop files here</div>
-                                        </div>
+                        <style>
+                            @import "http://fonts.googleapis.com/css?family=Droid+Sans";
+                            form{
+                            background-color:#fff
+                            }
+                            #maindiv{
+                            width:960px;
+                            margin:10px auto;
+                            padding:10px;
+                            font-family:'Droid Sans',sans-serif
+                            }
+                            #formdiv{
+                            width:500px;
+                            float:left;
+                            text-align:center
+                            }
+                            form{
+                            padding:40px 20px;
+                            box-shadow:0 0 10px;
+                            border-radius:2px
+                            }
+                            h2{
+                            margin-left:30px
+                            }
+                            .upload{
+                            background-color:blue;
+                            border:1px solid blue;
+                            color:#fff;
+                            border-radius:5px;
+                            padding:10px;
+                          
+                            }
+                            .upload:hover{
+                            cursor:pointer;
+                            background:black;
+                            border:1px solid #c20b0b;
+                            box-shadow:0 0 5px rgba(0,0,0,.75)
+                            }
+                            #file{
+                            color:green;
+                            padding:5px;
+                            border:1px dashed #123456;
+                            background-color:#f9ffe5
+                            }
+                            #upload{
+                            margin-left:45px
+                            }
+                            #noerror{
+                            color:green;
+                            text-align:left
+                            }
+                            #error{
+                            color:red;
+                            text-align:left
+                            }
+                            #img{
+                            width:17px;
+                            border:none;
+                            height:17px;
+                            margin-left:-20px;
+                            margin-bottom:91px
+                            }
+                            .abcd{
+                            text-align:center
+                            }
+                            .abcd img{
+                            height:100px;
+                            width:100px;
+                            padding:5px;
+                            border:1px solid #e8debd
+                            }
+                            b{
+                            color:red
+                            }
+                            </style>
 
-                                        <div id="submitbutton">
-                                            <button type="submit">Upload Files</button>
-                                    </fieldset>
-                                </form>
+                        <!--- Including PHP Script -->
+                        <?php include "upload.php"; ?>
 
-                                <div id="messages">
-                                    <p>Status</p>
-                                </div>
-
-                                <style>
-                                #filedrag
-                                {
-                                    display: none;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    padding: 1em 0;
-                                    margin: 1em 0;
-                                    color: #555;
-                                    border: 2px dashed #555;
-                                    border-radius: 7px;
-                                    cursor: default;
-                                }
-
-                                #filedrag.hover
-                                {
-                                    color: #f00;
-                                    border-color: #f00;
-                                    border-style: solid;
-                                    box-shadow: inset 0 3px 4px #888;
-                                }
-
-                                </style>-->
 
                                 <div class="modal-footer">
                                     <button class="btn btn-default">Submit</button>
