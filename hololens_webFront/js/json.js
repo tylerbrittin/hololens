@@ -32,15 +32,9 @@
                                     alert("error");
                                 }
                             });
-
-                        response = HttpResponse(json.dumps('{"status" : "success"}'))
-                        response.__setitem__("Content-type", "application/json")
-                        response.__setitem__("Access-Control-Allow-Origin", "*")
-
-                        return response
-
                         //console.log(JSON.stringify(data))
                         //console.log(url);
+
 
                 };
 
