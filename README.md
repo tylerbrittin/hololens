@@ -11,7 +11,7 @@ Hololens App
 ----------
 The main component of Nebula is the Microsoft Hololens app.  The application runs on the Microsoft Hololens and is the key to the shopping experience.  Using the Hololens technology, Nebula turns your entire field of view into a virtual space.  You can then view a holographic, 3D to scale model of an item prior to purchasing it.  Imagine being able to look at an empty room and holographiclly furnish it entirely without ever leaving your home.  That's the magic of Nebula.
 
-(include link to Steve's Github)
+Project can be found here: https://github.com/Generalkidd/NebulaShop
 
 NebulaShop Website
 ----------
