@@ -5,3 +5,7 @@ curl -H "Content-Type: application/json" -d '{ "category" : "music", "seller" : 
 FOR ADDING A CATEGORY
 =====================
 curl -H "Content-Type: application/json" -d '{ "name" : "testColl" }' localhost:5073/addcat
+
+FOR ADDING A USER
+=================
+curl -H "Content-Type: application/json" -d '{ "username" : "tylerbrittin", "password" : "badpass", "firstname" : "Tyler", "lastname" : "Brittin", "email" : "brittin.tyler@email.com" }' localhost:5073/adduser

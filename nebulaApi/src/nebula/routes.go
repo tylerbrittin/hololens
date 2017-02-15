@@ -60,4 +60,16 @@ var routes = Routes{
     "/getuseritems/{username}",
     GetUserItems,
   },
+  Route{
+    "CheckUsername",
+    "GET",
+    "/checkusername/{username}",
+    CheckUsername,
+  },
+  Route{
+    "AddUser",
+    "POST",
+    "/adduser",
+    AddUser,
+  },
 }

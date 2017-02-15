@@ -27,9 +27,24 @@ type Simple struct {
 }
 
 // Struct for user info
-type UserInfo struct {
+type UserInfo struct {  
+  Username      string
   Password      string
+  Firstname     string
+  Lastname      string
+  Email         string
 }
+
+// Struct for adding a user
+type UserAddition struct {
+  ID            string `bson:"_id,omitempty"`
+  Username      string
+  Password      string
+  Firstname     string
+  Lastname      string
+  Email         string
+}
+
 
 // Get a MongoDB session
 func GetSession() *mgo.Session {
@@ -195,4 +210,54 @@ func UserItems(s *mgo.Session, name string) []Simple {
   }
 
   return results
+}
+
+// Get a list of all current users in the system
+func GetUserList(s *mgo.Session) []string {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!")
+  }
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  users, err := s.DB("users").CollectionNames()
+
+  if err != nil {
+    log.Printf("ERROR: Error accessing list of users!")
+  }
+
+  return users
+}
+
+// Insert a new user into MongoDB
+func InsertUser(s *mgo.Session, u UserInfo) bool {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!")
+    os.Exit(1)
+  }
+
+  collName := u.Username
+  defer s.Close()
+
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("users").C(collName)
+
+  var ua UserAddition
+  ua.ID = "userInfo"
+  ua.Username = collName
+  ua.Password = u.Password
+  ua.Firstname = u.Firstname
+  ua.Lastname = u.Lastname
+  ua.Email = u.Email
+
+  err := c.Insert(ua)
+
+  res := false
+  if err != nil {
+    res = true
+  }
+
+  return res
 }
