@@ -10,6 +10,7 @@ import (
   "io"
   "os"
 )
+
 // Struct for category names
 type Cats struct {
   Categories    []string
@@ -21,15 +22,17 @@ type NewCat struct {
 }
 
 var simpItems []Simple
+var userIts []Simple
 var detItem Item
 var postItem Item
 var cats Cats
 var newCat NewCat
+var user UserInfo
 
 // Index Handler
 func Index(w http.ResponseWriter, r *http.Request) {
   fmt.Fprint(w, "Welcome! This is the API for the Nebula Shopping portal!\n")
-  fmt.Fprint(w, "Current version: 1.8\n")
+  fmt.Fprint(w, "Current version: 1.8.5\n")
 }
 
 // Handler for adding a new category of item
@@ -169,6 +172,48 @@ func GetDetails(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Content-Type", "application/json; charset=UTF-8")
   w.WriteHeader(http.StatusOK)
   if err := json.NewEncoder(w).Encode(detItem); err != nil {
+    log.Println("ERROR: Unable to properly encode items from MongoDB as JSON!")
+  }
+}
+
+// Handler for getting user info
+func GetUserInfo(w http.ResponseWriter, r *http.Request) {
+  session := GetSession()
+
+  if session == nil {
+    log.Println("FATAL: Unable to get MongoDB Connection. Exiting!")
+    os.Exit(1)
+  }
+
+  vars := mux.Vars(r)
+  username := vars["username"]
+
+  user = GetUser(session, username)
+
+  w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+  w.WriteHeader(http.StatusOK)
+  if err := json.NewEncoder(w).Encode(user); err != nil {
+    log.Println("ERROR: Unable to properly encode items from MongoDB as JSON!")
+  }
+}
+
+// Handler for getting all items for sale by a user
+func GetUserItems(w http.ResponseWriter, r *http.Request) {
+  session := GetSession()
+
+  if session == nil {
+    log.Println("FATAL: Unable to get MongoDB Connection. Exiting!")
+    os.Exit(1)
+  }
+
+  vars := mux.Vars(r)
+  username := vars["username"]
+
+  userIts = UserItems(session, username)
+
+  w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+  w.WriteHeader(http.StatusOK)
+  if err := json.NewEncoder(w).Encode(userIts); err != nil {
     log.Println("ERROR: Unable to properly encode items from MongoDB as JSON!")
   }
 }

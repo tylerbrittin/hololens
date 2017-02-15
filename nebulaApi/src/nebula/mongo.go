@@ -26,6 +26,11 @@ type Simple struct {
   Model         string
 }
 
+// Struct for user info
+type UserInfo struct {
+  Password      string
+}
+
 // Get a MongoDB session
 func GetSession() *mgo.Session {
   s, err := mgo.Dial("mongodb://localhost")
@@ -144,4 +149,50 @@ func CreateCategory(s *mgo.Session, name string) bool {
   }
 
   return res
+}
+
+// Function for getting a users info
+func GetUser(s *mgo.Session, name string) UserInfo {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!")
+    os.Exit(1)
+  }
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("users").C(name)
+
+  var result UserInfo
+  err := c.Find(bson.M{"_id": "userInfo"}).One(&result)
+  
+  if err != nil {
+    log.Printf("FATAL: Can not access user info for "+name+"! Application Closing!")
+    os.Exit(1)
+  }
+
+  return result
+}
+
+// Function to get all items for sale by a user
+func UserItems(s *mgo.Session, name string) []Simple {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!")
+    os.Exit(1)
+  }
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("users").C(name)
+
+  var results []Simple 
+  err := c.Find(bson.M{"_id": bson.M{"$not": bson.RegEx{`userInfo`, ""}}}).All(&results) 
+
+  if err != nil {
+    log.Printf("FATAL: Can not access items for sale by "+name+"! Application Closing!")
+    os.Exit(1)
+  }
+
+  return results
 }

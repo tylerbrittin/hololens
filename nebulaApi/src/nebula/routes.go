@@ -47,5 +47,17 @@ var routes = Routes{
     "GET",
     "/getdetails/{collName}/{id}",
     GetDetails,
-  }, 
+  },
+  Route{
+    "GetUserInfo",
+    "GET",
+    "/getuserinfo/{username}",
+    GetUserInfo,
+  },
+  Route{
+    "GetUserItems",
+    "GET",
+    "/getuseritems/{username}",
+    GetUserItems,
+  },
 }
