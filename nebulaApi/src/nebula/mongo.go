@@ -182,8 +182,7 @@ func GetUser(s *mgo.Session, name string) UserInfo {
   err := c.Find(bson.M{"_id": "userInfo"}).One(&result)
   
   if err != nil {
-    log.Printf("FATAL: Can not access user info for "+name+"! Application Closing!")
-    os.Exit(1)
+    log.Printf("ERROR: Can not access user info for "+name+"!")
   }
 
   return result
@@ -205,8 +204,7 @@ func UserItems(s *mgo.Session, name string) []Simple {
   err := c.Find(bson.M{"_id": bson.M{"$not": bson.RegEx{`userInfo`, ""}}}).All(&results) 
 
   if err != nil {
-    log.Printf("FATAL: Can not access items for sale by "+name+"! Application Closing!")
-    os.Exit(1)
+    log.Printf("ERROR: Can not access items for sale by "+name+"!")
   }
 
   return results
