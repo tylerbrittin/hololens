@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Utility script to aid in compiling a go program
-# simply run ./
+# simply run ./<path_to_script> <project name>
 
 cd /opt/api/src
 go install $1

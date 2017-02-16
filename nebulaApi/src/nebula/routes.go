@@ -25,15 +25,51 @@ var routes = Routes{
     AddItem,
   },
   Route{
+    "AddCat",
+    "POST",
+    "/addcat",
+    AddCat,
+  },
+  Route{
     "GetItems",
     "GET",
     "/getitems/{collName}",
     GetItems,
   },
   Route{
+    "GetCats",
+    "GET",
+    "/getcats",
+    GetCats,
+  },
+  Route{
     "GetDetails",
     "GET",
     "/getdetails/{collName}/{id}",
     GetDetails,
+  },
+  Route{
+    "GetUserInfo",
+    "GET",
+    "/getuserinfo/{username}",
+    GetUserInfo,
+  },
+  Route{
+    "GetUserItems",
+    "GET",
+    "/getuseritems/{username}",
+    GetUserItems,
+  },
+  Route{
+    "CheckUsername",
+    "GET",
+    "/checkusername/{username}",
+    CheckUsername,
+  },
+  Route{
+    "AddUser",
+    "POST",
+    "/adduser",
+    AddUser,
   },
 }
