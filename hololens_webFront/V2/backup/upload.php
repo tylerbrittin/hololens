@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['uploadimage'])) {
 	$j = 0; 		// Variable for indexing uploaded image
-	$target_path = "/tmp/uploads";  // Declaring path for uploaded images.
+	$target_path = "tmp/uploads";  // Declaring path for uploaded images.
 	for ( $i = 0; $i < count($_FILES['file']['name']); $i++) {
 		// Loop to get individual element from the array
 
