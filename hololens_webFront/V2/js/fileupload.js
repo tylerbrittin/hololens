@@ -70,6 +70,7 @@
 
                     //Save the uploaded image file name to be used for later
                     image_src = file.name;
+                
 
                     jQuery("#imageName").val(image_src);
                     /*
