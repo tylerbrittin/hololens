@@ -367,11 +367,11 @@
                                     <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
                                 </form>
 
-                                    <h2> Image Upload </h2>
+                                    <h2> Model File Upload </h2>
                                     <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
                                         Only JPEG, PNG, JPG types allowed. .
                                         <br/><br/>
-                                        <!--<div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
+                                        <div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
                                         <br/>
 
                                         <div class="form-group">
@@ -379,7 +379,33 @@
                                             <div class="col-md-10">
                                                 <span class="btn btn-success fileinput-button">
                                                     <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Select files...</span>
+                                                    <span>Select model file...</span>
+                                                </span>
+
+                                                <br>
+                                                <br>
+                                                <!-- The global progress bar -->
+                                                <div id="progress" class="progress" style="width: 465px">
+                                                    <div class="progress-bar progress-bar-success"></div>
+                                                </div>
+                                                <!-- The container for the uploaded files -->
+                                                <div id="files" class="files"></div>
+                                            </div>
+                                        </div>
+
+                                        <h2> Texture File Upload </h2>
+                                    <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
+                                        Only JPEG, PNG, JPG types allowed. .
+                                        <br/><br/>
+                                        <div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
+                                        <br/>
+
+                                        <div class="form-group">
+                                            <input type="hidden" name="filename" id="imageName">
+                                            <div class="col-md-10">
+                                                <span class="btn btn-success fileinput-button">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    <span>Select texture file...</span>
                                                 </span>
 
                                                 <br>

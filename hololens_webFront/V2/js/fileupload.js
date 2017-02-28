@@ -52,10 +52,10 @@
             jQuery('#fileupload').click();
         });
 
-        //File Upload for the image banner
+        /*//File Upload for the image banner
         jQuery('.fileinput-button').click(function () {
             jQuery('#fileupload').click();
-        });
+        });*/
 
         //'use strict';
         // Change this to the location of your server-side upload handler:
