@@ -1,6 +1,6 @@
 FOR ADDING AN ITEM
 ==================
-curl -H "Content-Type: application/json" -d '{ "category" : "music", "seller" : "Wu Tang", "price" : "$10000", "model" : "serialzied new new album", "email" : "newemail@newemail", "item" : "new new album", "itemdesc" : "used" }' localhost:5073/additem
+curl -H "Content-Type: application/json" -d '{ "category" : "electronics", "seller" : "Mr. Electronic", "price" : "$300", "model" : "model_mod_username", "texture": "texture_tex_username", "email" : "newemail@newemail", "item" : "example TV", "itemdesc" : "used" }' localhost:5073/additem
 
 FOR ADDING A CATEGORY
 =====================

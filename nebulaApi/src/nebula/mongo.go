@@ -17,6 +17,7 @@ type Item struct {
   Email         string
   Price         string
   Model         string
+  Texture       string
 }
 
 // Struct for a simple Nebula object
@@ -24,6 +25,7 @@ type Simple struct {
   ID            bson.ObjectId `bson:"_id,omitempty"`
   Item          string
   Model         string
+  Texture       string
 }
 
 // Struct for user info
