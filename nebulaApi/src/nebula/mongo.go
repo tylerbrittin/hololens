@@ -92,8 +92,7 @@ func GetColl(s *mgo.Session, collName string) []Simple {
   err := c.Find(nil).All(&results)
 
   if err != nil {
-    log.Printf("FATAL: Can not access "+collName+" collection to get items! Application Closing!")
-    os.Exit(1)
+    log.Printf("ERROR: Can not access "+collName+" collection to get items!") 
   }
 
   return results
@@ -115,8 +114,7 @@ func GetItemDets(s *mgo.Session, collName string, id string) Item {
   err := c.FindId(bson.ObjectIdHex(id)).One(&result)
 
   if err != nil {
-    log.Printf("FATAL: Can not access "+collName+" collection to get item! Application Closing!")
-    os.Exit(1)
+    log.Printf("ERROR: Can not access "+collName+" collection to get item!")
   }
 
   return result
