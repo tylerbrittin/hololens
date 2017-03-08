@@ -15,7 +15,7 @@
 
            //console.log(JSON.stringify(data));
                         //construct an HTTP request
-                        var url = 'http://40.87.66.169:5073/additem'
+                        var url = //this URL has been taken out
 
                             $.ajax({
                                 url: url,
