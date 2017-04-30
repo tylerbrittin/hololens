@@ -1,6 +1,5 @@
 <?php
 
- 
 
 require_once './libs/UploadHandler.php';
 

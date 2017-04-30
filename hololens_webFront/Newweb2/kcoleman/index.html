@@ -29,35 +29,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Adding jQuery and jQuery file uploader -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <!-- For uploading images using jQuery -->
-    <script type="text/javascript" src="./libs/jQFU/js/vendor/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="./libs/jQFU/js/jquery.iframe-transport.js"></script>
-    <script type="text/javascript" src="./libs/jQFU/js/jquery.fileupload.js"></script>
-    <script type="text/javascript" src="./js/ajaxify.js"></script>
-    <script type="text/javascript" src="./js/serialize.js"></script>
-    <script type="text/javascript" src="./js/fileupload.js"></script>
-
 </head>
 
 <body id="page-top" class="index">
-
-    <!-- This is used to upload the Files via jQuery, so don't modify plz -->
-    <div style="display: none">
-        <form>
-            <input type="hidden" name="no_html" value="yes">
-            <input type="hidden" name="type" value="mod">
-            <input type="hidden" name="username" id="modUsername">
-            <input id="fileupload" type="file" name="files[]" accept="*/*">
-        </form>
-        <form>
-            <input type="hidden" name="no_html" value="yes">
-            <input type="hidden" name="type" value="tex">
-            <input type="hidden" name="username"  id="texUsername">
-            <input id="textureupload" type="file" name="files[]" accept="image/*">
-        </form>
-    </div>
 
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
@@ -76,32 +50,15 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-
                     <li class="page-scroll">
-                        <a href="#portfolio">Create a listing</a>
-                    </li>
-
-                   <!-- <li class="page-scroll">
                         <a href="#portfolio">Product Templates</a>
-                    </li>-->
-
+                    </li>
                     <li class="page-scroll">
                         <a href="#about">About</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#contact">Contact</a>
                     </li>
-                    
-                    <li>
-                    
-                                        <button data-toggle="modal" data-target="#createModal12" id="createbutton" type="button" class="btn btn-primary btn-lg">Edit a listing</button>
-                    
-
-                    </li>
-                    <li>
-                    <button data-toggle="modal" data-target="#createModal13" id="createbutton" type="button" class="btn btn-primary btn-lg">Delete a listing</button>
-                    </li>
-
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -114,7 +71,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="img/nebula_logo_v2.png" alt="">
+                    <img class="img-responsive" src="img/nebula_logo_v2.PNG" alt="">
                     <div class="intro-text">
                         <!--<span class="name">Nebula</span> -->
                         <hr class="star-light">
@@ -136,14 +93,13 @@
 
                     <button data-toggle="modal" data-target="#createModal" id="createbutton" type="button" class="btn btn-primary btn-lg">Create Custom Listing</button>
 
-                   
                 &nbsp
                 &nbsp
 
                 <br />
 
 
-                  <!--  <h2> OR <h2>
+                    <h2> OR <h2>
                    
                     <h3>Select a category</h2>
 
@@ -189,7 +145,7 @@
                     </a>
                 </div>
             </div>
-        </div>-->
+        </div>
 
     </section>
 
@@ -207,7 +163,7 @@
                     <p>Nebula is an Augmented Reality platform giving Hololens users the ability to shop for various products. With the Hololens platform it gives users the opportunity to virtually touch, move, and position life-sized products around their current environment.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>This application and web store was .</p>
+                    <p>This application and web store was designed and development by senior students from Drexel University.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
  
@@ -303,7 +259,7 @@
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>About Nebula</h3>
-                        <p>Nebula is a free to use, open source application . <a href="http://startbootstrap.com">Insert Team Website</a>.</p>
+                        <p>Nebula is a free to use, open source application created by a senior design team from Drexel University. <a href="http://startbootstrap.com">Insert Team Website</a>.</p>
                     </div>
                 </div>
             </div>
@@ -326,11 +282,136 @@
         </a>
     </div>
 
+    <!-- Portfolio Modals -->
+    <div class="portfolio-modal modal fade" id="Furniture" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Furniture</h2>
+                            <hr class="star-primary">
+                            <img src="img/portfolio/couch.jpg" class="img-responsive img-centered" alt="">
+                            
+                            <p>Couches, chairs, tables, you name it. We have it all in amazing 3D. </p>
+                        <!--
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
 
+                        -->
+                        
+                            <ul class="list-inline item-details">
+                                <button data-toggle="modal" data-target="#createModalF" id="createbutton" type="button" class="btn btn-primary btn-lg">Create a Furniture Listing</button>
+
+                            </ul>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="books" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Books</h2>
+                            <hr class="star-primary">
+                            <img src="img/portfolio/book.jpg" class="img-responsive img-centered" alt="">
+                            <p>Browse Books in 3D before buying. You don't know what you've been missing. </p>
+                            <ul class="list-inline item-details">
+                                <button data-toggle="modal" data-target="#createModalB" id="createbutton" type="button" class="btn btn-primary btn-lg" >Create a Book Listing</button>
+                            </ul>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="Music" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Music</h2>
+                            <hr class="star-primary">
+                            <img src="img/portfolio/instruments.jpg" class="img-responsive img-centered" alt="">
+                            <p>No only do instruments make beautiful music, they also look beautiful in 3D.</p>
+                            <ul class="list-inline item-details">
+                                <button data-toggle="modal" data-target="#createModalM" id="createbutton" type="button" class="btn btn-primary btn-lg">Create a Music Listing</button>
+                            </ul>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Project Title</h2>
+                            <hr class="star-primary">
+                            <img src="img/portfolio/game.png" class="img-responsive img-centered" alt="">
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <ul class="list-inline item-details">
+                                <li>Client:
+                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                    </strong>
+                                </li>
+                                <li>Date:
+                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    </strong>
+                                </li>
+                                <li>Service:
+                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                    </strong>
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
 
     <!-- jQuery -->
-    <!--<script src="vendor/jquery/jquery.min.js"></script>-->
+    <script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -344,8 +425,6 @@
 
     <!-- Theme JavaScript -->
     <script src="js/freelancer.min.js"></script>
-
-    <script src="script.js"></script>
 
 </body>
 
@@ -361,12 +440,9 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: left">
-                                
-                                <!--
+
                                 <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                -->
-                                <form name="submitForm">
-                                    <input name="seller" value="" type="text" class="form-control" placeholder="Username"> &nbsp
+                                    <input name="seller" value="" type="text" class="form-control" placeholder="First and Last Name"> &nbsp
                                     <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
                                     <select name="category" value="" class="form-control">
                                         <option selected disabled value="choose">--Category--</option>
@@ -376,170 +452,8 @@
                                     </select> &nbsp
                                     <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
                                     <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
-                                    <input name="model" value="" type="hidden" class="form-control" placeholder="Model"> &nbsp
-                                    <input name="texture" value="" type="hidden" class="form-control" placeholder="Texture"> &nbsp
+                                    <input name="model" value="" type="text" class="form-control" placeholder="Model"> &nbsp
                                     <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
-                                </form>
-
-                                    <h2> Image Upload </h2>
-                                    <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
-                                        Only JPEG, PNG, JPG types allowed. .
-                                        <br/><br/>
-                                        <!--<div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
-                                        <br/>
-
-                                        <div class="form-group">
-                                            <input type="hidden" name="filename" id="imageName">
-                                            <input type="hidden" name="texturename" id="textureName">
-                                            <div class="col-md-10">
-                                                <span class="btn btn-success fileinput-button image-button">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Select Model File...</span>
-                                                </span>
-                                                <span id="modelName"></span>
-                                                <br>
-                                                <br>
-                                                <!-- The global progress bar -->
-                                                <div id="progress" class="progress" style="width: 465px">
-                                                    <div class="progress-bar progress-bar-success"></div>
-                                                </div>
-                                                <!-- The container for the uploaded files -->
-                                                <div id="files" class="files"></div>
-                                            </div>
-
-                                            <div class="col-md-10">
-                                                <span class="btn btn-success fileinput-button image-buttonx">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Select Texture File...</span>
-                                                </span>
-                                                <span id="texName"></span>
-
-                                                <br>
-                                                <br>
-                                                <!-- The global progress bar -->
-                                                <div id="progressx" class="progress" style="width: 465px">
-                                                    <div class="progress-bar progress-bar-success"></div>
-                                                </div>
-                                                <!-- The container for the uploaded files -->
-                                                <div id="texturefiles" class="files"></div>
-                                            </div>
-                                        </div>
-
-
-                            <!-- <input type="button" id="add_more" class="upload" value="Add More Files"/>-->
-                            <!--<input type="submit" value="Upload File" name="uploadimage" id="upload" class="upload"/>-->
-                        <!--</form>-->
-
-                        <style>
-                            @import "http://fonts.googleapis.com/css?family=Droid+Sans";
-                            form{
-                            background-color:#fff
-                            }
-                            #maindiv{
-                            width:960px;
-                            margin:10px auto;
-                            padding:10px;
-                            font-family:'Droid Sans',sans-serif
-                            }
-                            #formdiv{
-                            width:500px;
-                            float:left;
-                            text-align:center
-                            }
-                            form{
-                            padding:40px 20px;
-                            box-shadow:0 0 10px;
-                            border-radius:2px
-                            }
-                            h2{
-                            margin-left:30px
-                            }
-                            .upload{
-                            background-color:blue;
-                            border:1px solid blue;
-                            color:#fff;
-                            border-radius:5px;
-                            padding:10px;
-                          
-                            }
-                            .upload:hover{
-                            cursor:pointer;
-                            background:black;
-                            border:1px solid #c20b0b;
-                            box-shadow:0 0 5px rgba(0,0,0,.75)
-                            }
-                            #file{
-                            color:green;
-                            padding:5px;
-                            border:1px dashed #123456;
-                            background-color:#f9ffe5
-                            }
-                            #upload{
-                            margin-left:45px
-                            }
-                            #noerror{
-                            color:green;
-                            text-align:left
-                            }
-                            #error{
-                            color:red;
-                            text-align:left
-                            }
-                            #img{
-                            width:17px;
-                            border:none;
-                            height:17px;
-                            margin-left:-20px;
-                            margin-bottom:91px
-                            }
-                            .abcd{
-                            text-align:center
-                            }
-                            .abcd img{
-                            height:100px;
-                            width:100px;
-                            padding:5px;
-                            border:1px solid #e8debd
-                            }
-                            b{
-                            color:red
-                            }
-                            </style>
-
-                        <!--- Including PHP Script -->
-                        <?php /*include "upload.php";*/ ?>
-
-
-                                <div class="modal-footer">
-                                   <!-- <button class="btn btn-default" id="sendAjax">Submit</button> -->
-                                </div>
-                                </form>
-                    </div>
-              <button class="btn btn-default" id="sendAjax">Submit</button>
-                </div>
-            </div>
-        </div>
-</div>
-
-
-<div id="createModala" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New account</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                    <input name="name" value="" type="text" class="form-control" placeholder="First and Last Name"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
-                                    <input name="pw" value="" type="password" class="form-control" placeholder="Password"> &nbsp
-                                    <input name="pw2" value="" type="password" class="form-control" placeholder="Confirm password"> &nbsp
-                                    &nbsp
-                                    
 
                               <!--  <form id="upload" action="upload.php" method="POST" enctype="multipart/form-data">
                                     <fieldset>
@@ -586,7 +500,7 @@
                                 </style>-->
 
                                 <div class="modal-footer">
-                                    <button class="btn btn-default">Create</button>
+                                    <button class="btn btn-default">Submit</button>
                                 </div>
                                 </form>
                     </div>
@@ -701,7 +615,7 @@
 </div> -->
 
 <script src="js/json.js"></script>
-<!--<script src="js/filedrag.js"></script>-->
+<script src="js/filedrag.js"></script>
 
                 <!-- <script>
                                 var form = document.forms['form'];

@@ -1,3 +1,15 @@
+<?php
+
+require_once './lib/header.php';
+
+//Redirect to login if not logged in (login is required)
+if(!is_logged_in()) {
+    redirect('/login.php');
+}
+
+$user = get_logged_in_user();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,13 +105,13 @@
                     </li>
                     
                     <li>
-                    
-                                        <button data-toggle="modal" data-target="#createModal12" id="createbutton" type="button" class="btn btn-primary btn-lg">Edit a listing</button>
-                    
-
+                        <a data-toggle="modal" style="cursor: pointer;" data-target="#createModal12" id="createbutton">Edit a listing</a>
                     </li>
                     <li>
-                    <button data-toggle="modal" data-target="#createModal13" id="createbutton" type="button" class="btn btn-primary btn-lg">Delete a listing</button>
+                        <a data-toggle="modal" style="cursor: pointer;" data-target="#createModal13" id="deletebutton">Delete a listing</a>
+                    </li>
+                    <li>
+                        <a href="/logout.php">Log out</a>
                     </li>
 
                 </ul>
@@ -366,8 +378,8 @@
                                 <form enctype='application/json' style="text-align: center" method="post" name="form">
                                 -->
                                 <form name="submitForm">
-                                    <input name="seller" value="" type="text" class="form-control" placeholder="Username"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
+                                    <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
+                                    <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
                                     <select name="category" value="" class="form-control">
                                         <option selected disabled value="choose">--Category--</option>
                                         <option value="furniture">Furniture</option>

@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
             //e.preventDefault();
 
             //Please put here your API URL
-            var API_URL = 'http://40.121.206.106:5073/additem';
+            var API_URL = 'http://40.71.214.175:5073/additem';
 
             //Retrieve the model's name and put it in the model input
             jQuery('input[name=model]').val(jQuery("#imageName").val());
@@ -107,9 +107,14 @@ jQuery(document).ready(function() {
                     //Save the uploaded image file name to be used for later
                     image_src   = 'http://www.nebulashop.net/uploads/'+file.name;
                     original    = image_src.replace('_mod_'+jQuery('input[name=seller]').val(), '');
+                    
+
 
                     jQuery("#imageName").val(image_src);
                     jQuery("#modelName").html(original);
+
+                   
+
                 });
             },
             progressall: function (e, data) {
