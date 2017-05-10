@@ -39,3 +39,36 @@ function create_user($user) {
         ->send();
     return !$response->hasErrors();
 }
+
+function delete_item($seller, $category, $id) {
+    $uri = API_HOST."deleteitem";
+    $response = \Httpful\Request::post($uri)
+        ->sendsJson()
+        ->body(json_encode([
+                'Seller' => $seller,
+                'Category' => $category,
+                'id' => $id
+            ]))
+        ->send();
+        return !$response->hasErrors();
+}
+
+function edit_item($email, $seller, $category, $item, $itemdesc, $price, $id, $model, $texture) {
+    $uri = API_HOST."edititem";
+    $response = \Httpful\Request::post($uri)
+        ->sendsJson()
+        ->body(json_encode([
+                'Id' => $id,
+                'Category' => $category,
+                'Seller' => $seller,
+                'Price' => $price,
+                'Model' => $model,
+                'Texture' => $texture,
+                'Email' => $email,
+                'Item' => $item,
+                'Itemdesc' => $itemdesc,
+
+            ]))
+        ->send();
+    return !$response->hasErrors();
+}

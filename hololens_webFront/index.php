@@ -4,10 +4,18 @@ require_once './lib/header.php';
 
 //Redirect to login if not logged in (login is required)
 if(!is_logged_in()) {
-    redirect('/login.php');
+    redirect('login.php');
 }
 
 $user = get_logged_in_user();
+
+if ($_GET['deleteItem']) {
+    die(json_encode(delete_item($_GET['seller'], $_GET['category'], $_GET['id'])));
+}
+
+if ($_GET['editItem']) {
+    die(json_encode(edit_item($_GET['email'], $_GET['seller'], $_GET['category'], $_GET['item'], $_GET['itemdesc'], $_GET['price'], $_GET['id'], $_GET['model'], $_GET['texture'])));
+}
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +58,84 @@ $user = get_logged_in_user();
     <script type="text/javascript" src="./js/ajaxify.js"></script>
     <script type="text/javascript" src="./js/serialize.js"></script>
     <script type="text/javascript" src="./js/fileupload.js"></script>
-
+    <style>
+        @import "http://fonts.googleapis.com/css?family=Droid+Sans";
+        form{
+        background-color:#fff
+        }
+        #maindiv{
+        width:960px;
+        margin:10px auto;
+        padding:10px;
+        font-family:'Droid Sans',sans-serif
+        }
+        #formdiv{
+        width:500px;
+        float:left;
+        text-align:center
+        }
+        form{
+        padding:40px 20px;
+        box-shadow:0 0 10px;
+        border-radius:2px
+        }
+        h2{
+        margin-left:30px
+        }
+        .upload{
+        background-color:blue;
+        border:1px solid blue;
+        color:#fff;
+        border-radius:5px;
+        padding:10px;
+      
+        }
+        .upload:hover{
+        cursor:pointer;
+        background:black;
+        border:1px solid #c20b0b;
+        box-shadow:0 0 5px rgba(0,0,0,.75)
+        }
+        #file{
+        color:green;
+        padding:5px;
+        border:1px dashed #123456;
+        background-color:#f9ffe5
+        }
+        #upload{
+        margin-left:45px
+        }
+        #noerror{
+        color:green;
+        text-align:left
+        }
+        #error{
+        color:red;
+        text-align:left
+        }
+        #img{
+        width:17px;
+        border:none;
+        height:17px;
+        margin-left:-20px;
+        margin-bottom:91px
+        }
+        .abcd{
+        text-align:center
+        }
+        .abcd img{
+        height:100px;
+        width:100px;
+        padding:5px;
+        border:1px solid #e8debd
+        }
+        b{
+        color:red
+        }
+        .existingItems td {
+            width: 163px;
+        }
+    </style>
 </head>
 
 <body id="page-top" class="index">
@@ -104,12 +189,11 @@ $user = get_logged_in_user();
                         <a href="#contact">Contact</a>
                     </li>
                     
-                    <li>
-                        <a data-toggle="modal" style="cursor: pointer;" data-target="#createModal12" id="createbutton">Edit a listing</a>
-                    </li>
-                    <li>
-                        <a data-toggle="modal" style="cursor: pointer;" data-target="#createModal13" id="deletebutton">Delete a listing</a>
-                    </li>
+                    <?php if (!empty($user)) : ?>
+                        <li>
+                            <a data-toggle="modal" style="cursor: pointer;" data-target="#editModal" id="createbutton">My Listings</a>
+                        </li>
+                    <?php endif; ?>
                     <li>
                         <a href="/logout.php">Log out</a>
                     </li>
@@ -358,179 +442,226 @@ $user = get_logged_in_user();
     <script src="js/freelancer.min.js"></script>
 
     <script src="script.js"></script>
+    <script>
 
+        function edit_item(id, category, seller, price, model, texture, email, item, itemdesc) {
+            // toggle the visible modiles
+            $('#editModal').modal('hide');
+            $('#editItemModal').modal();
+
+            $('#editItemModal select[name="category"]').val(category);
+            $('#editItemModal input[name="item"]').val(item);
+            $('#editItemModal input[name="itemdesc"').val(itemdesc);
+            $('#editItemModal input[name="price"]').val(price);
+            $('#editItemModal input[name="id"]').val(id);
+            console.log("ID: " + id);
+            $('#editItemModal input[name="model"]').val(model);
+            $('#editItemModal input[name="texture"]').val(texture);
+
+
+        }
+
+        function send_edit() {
+            $.getJSON('index.php?editItem=1&email=' + $('#editItemModal input[name="email"]').val() + '&seller=' + $('#editItemModal input[name="seller"]').val() + '&category=' + $('#editItemModal select[name="category"]').val() + '&item=' + $('#editItemModal input[name="item"]').val() + '&itemdesc=' + $('#editItemModal input[name="itemdesc"').val() + '&price=' + $('#editItemModal input[name="price"]').val() + '&id=' + $('#editItemModal input[name="id"]').val() + '&model=' + $('#editItemModal input[name="model"]').val() + '&texture=' + $('#editItemModal input[name="texture"]').val(), function(data) {
+
+                $('#editItemModal').modal('hide');
+                $('#editModal').modal('show');
+                populateItemList();
+            });
+        }
+
+        function populateItemList() {
+            $.getJSON('https://thingproxy.freeboard.io/fetch/http://40.71.214.175:5073/getuseritems/<?= $user['username'] ?>', function(data) {
+                $('.existingItems').html('');
+                $(data).each(function(index, val) {
+                    $('.existingItems').append("<tr><td>" + val.Category + "</td><td>" + val.Item + "</td><td>" + val.Price + "</td><td>" + val.ItemDesc + "</td><td><a href='#' onclick='edit_item(\"" + addslashes(val.ID) + "\", \"" + addslashes(val.Category) + "\", \"" + addslashes(val.Seller) + "\", \"" + addslashes(val.Price) + "\", \"" + addslashes(val.Model) + "\", \"" + addslashes(val.Texture) + "\", \"" + addslashes(val.Email) + "\", \"" + addslashes(val.Item) + "\", \"" + addslashes(val.ItemDesc) + "\")'>edit</a> - <a href='#' onclick='deleteItem(\"" + val.Seller + "\", \"" + val.Category + "\", \"" + val.ID + "\")'>delete</a>")
+                    //$('.existingItems').append("<li>" + val.Category + " - " + val.Item + " - <a href='#' onclick='edit_item(\"" + addslashes(val.ID) + "\", \"" + addslashes(val.Category) + "\", \"" + addslashes(val.Seller) + "\", \"" + addslashes(val.Price) + "\", \"" + addslashes(val.Model) + "\", \"" + addslashes(val.Texture) + "\", \"" + addslashes(val.Email) + "\", \"" + addslashes(val.Item) + "\", \"" + addslashes(val.ItemDesc) + "\")'>edit</a> - <a href='#' onclick='deleteItem(\"" + val.Seller + "\", \"" + val.Category + "\", \"" + val.ID + "\")'>delete</a></li>");
+                })
+            })
+        }
+
+        function deleteItem(seller, category, id) {
+            $.getJSON('index.php?deleteItem=1&seller=' + seller + '&category=' + category + '&id=' + id, function(data) {
+                populateItemList();
+            });
+        }
+        $(document).ready(function() {
+            $('#createbutton').click(function() {
+                populateItemList();
+            })
+        })
+        function addslashes(string) {
+            return string.replace(/\\/g, '\\\\').
+                replace(/\u0008/g, '\\b').
+                replace(/\t/g, '\\t').
+                replace(/\n/g, '\\n').
+                replace(/\f/g, '\\f').
+                replace(/\r/g, '\\r').
+                replace(/'/g, '').
+                replace(/"/g, '');
+        }
+    </script>
 </body>
 
 </html>
 
 <div id="createModal" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New Listing</h4>
+    <div class="modal-dialog modal-lg">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create New Listing</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: left"> 
+                <!--
+                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                -->
+                <form name="submitForm">
+                    <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
+                    <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
+                    <select name="category" value="" class="form-control">
+                        <option selected disabled value="choose">--Category--</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="books">Books</option>
+                        <option value="music">Music</option>
+			            <option value="electronics">Electronics</option>
+                    </select> &nbsp
+                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                    <input name="model" value="" type="hidden" class="form-control" placeholder="Model"> &nbsp
+                    <input name="texture" value="" type="hidden" class="form-control" placeholder="Texture"> &nbsp
+                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
+                </form>
+
+                <h2> Image Upload </h2>
+                <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
+                    Only JPEG, PNG, JPG types allowed. .
+                    <br/><br/>
+                    <!--<div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
+                <br/>
+
+                <div class="form-group">
+                    <input type="hidden" name="filename" id="imageName">
+                    <input type="hidden" name="texturename" id="textureName">
+                    <div class="col-md-10">
+                        <span class="btn btn-success fileinput-button image-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select Model File...</span>
+                        </span>
+                        <span id="modelName"></span>
+                        <br>
+                        <br>
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress" style="width: 465px">
+                            <div class="progress-bar progress-bar-success"></div>
                         </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-                                
-                                <!--
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                -->
-                                <form name="submitForm">
-                                    <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
-                                    <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
-                                    <select name="category" value="" class="form-control">
-                                        <option selected disabled value="choose">--Category--</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="books">Books</option>
-                                        <option value="music">Music</option>
-                                    </select> &nbsp
-                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
-                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
-                                    <input name="model" value="" type="hidden" class="form-control" placeholder="Model"> &nbsp
-                                    <input name="texture" value="" type="hidden" class="form-control" placeholder="Texture"> &nbsp
-                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
-                                </form>
-
-                                    <h2> Image Upload </h2>
-                                    <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
-                                        Only JPEG, PNG, JPG types allowed. .
-                                        <br/><br/>
-                                        <!--<div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
-                                        <br/>
-
-                                        <div class="form-group">
-                                            <input type="hidden" name="filename" id="imageName">
-                                            <input type="hidden" name="texturename" id="textureName">
-                                            <div class="col-md-10">
-                                                <span class="btn btn-success fileinput-button image-button">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Select Model File...</span>
-                                                </span>
-                                                <span id="modelName"></span>
-                                                <br>
-                                                <br>
-                                                <!-- The global progress bar -->
-                                                <div id="progress" class="progress" style="width: 465px">
-                                                    <div class="progress-bar progress-bar-success"></div>
-                                                </div>
-                                                <!-- The container for the uploaded files -->
-                                                <div id="files" class="files"></div>
-                                            </div>
-
-                                            <div class="col-md-10">
-                                                <span class="btn btn-success fileinput-button image-buttonx">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Select Texture File...</span>
-                                                </span>
-                                                <span id="texName"></span>
-
-                                                <br>
-                                                <br>
-                                                <!-- The global progress bar -->
-                                                <div id="progressx" class="progress" style="width: 465px">
-                                                    <div class="progress-bar progress-bar-success"></div>
-                                                </div>
-                                                <!-- The container for the uploaded files -->
-                                                <div id="texturefiles" class="files"></div>
-                                            </div>
-                                        </div>
-
-
-                            <!-- <input type="button" id="add_more" class="upload" value="Add More Files"/>-->
-                            <!--<input type="submit" value="Upload File" name="uploadimage" id="upload" class="upload"/>-->
-                        <!--</form>-->
-
-                        <style>
-                            @import "http://fonts.googleapis.com/css?family=Droid+Sans";
-                            form{
-                            background-color:#fff
-                            }
-                            #maindiv{
-                            width:960px;
-                            margin:10px auto;
-                            padding:10px;
-                            font-family:'Droid Sans',sans-serif
-                            }
-                            #formdiv{
-                            width:500px;
-                            float:left;
-                            text-align:center
-                            }
-                            form{
-                            padding:40px 20px;
-                            box-shadow:0 0 10px;
-                            border-radius:2px
-                            }
-                            h2{
-                            margin-left:30px
-                            }
-                            .upload{
-                            background-color:blue;
-                            border:1px solid blue;
-                            color:#fff;
-                            border-radius:5px;
-                            padding:10px;
-                          
-                            }
-                            .upload:hover{
-                            cursor:pointer;
-                            background:black;
-                            border:1px solid #c20b0b;
-                            box-shadow:0 0 5px rgba(0,0,0,.75)
-                            }
-                            #file{
-                            color:green;
-                            padding:5px;
-                            border:1px dashed #123456;
-                            background-color:#f9ffe5
-                            }
-                            #upload{
-                            margin-left:45px
-                            }
-                            #noerror{
-                            color:green;
-                            text-align:left
-                            }
-                            #error{
-                            color:red;
-                            text-align:left
-                            }
-                            #img{
-                            width:17px;
-                            border:none;
-                            height:17px;
-                            margin-left:-20px;
-                            margin-bottom:91px
-                            }
-                            .abcd{
-                            text-align:center
-                            }
-                            .abcd img{
-                            height:100px;
-                            width:100px;
-                            padding:5px;
-                            border:1px solid #e8debd
-                            }
-                            b{
-                            color:red
-                            }
-                            </style>
-
-                        <!--- Including PHP Script -->
-                        <?php /*include "upload.php";*/ ?>
-
-
-                                <div class="modal-footer">
-                                   <!-- <button class="btn btn-default" id="sendAjax">Submit</button> -->
-                                </div>
-                                </form>
+                        <!-- The container for the uploaded files -->
+                        <div id="files" class="files"></div>
                     </div>
-              <button class="btn btn-default" id="sendAjax">Submit</button>
+                    <div class="col-md-10">
+                        <span class="btn btn-success fileinput-button image-buttonx">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select Texture File...</span>
+                        </span>
+                        <span id="texName"></span>
+
+                        <br>
+                        <br>
+                        <!-- The global progress bar -->
+                        <div id="progressx" class="progress" style="width: 465px">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <div id="texturefiles" class="files"></div>
+                    </div>
                 </div>
+                <!-- <input type="button" id="add_more" class="upload" value="Add More Files"/>-->
+                <!--<input type="submit" value="Upload File" name="uploadimage" id="upload" class="upload"/>-->
+                <!--</form>-->
+
+                <!--- Including PHP Script -->
+                <?php /*include "upload.php";*/ ?>
+
+
+                <div class="modal-footer">
+                           <!-- <button class="btn btn-default" id="sendAjax">Submit</button> -->
+                </div>
+                <button class="btn btn-default" id="sendAjax">Submit</button>
             </div>
         </div>
+    </div>
+</div>
+</div>
+
+<div id="editItemModal" class="modal fade" role ="dialog">
+    <div class="modal-dialog modal-lg">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Listing</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: left"> 
+                <!--
+                <form enctype='application/json' style="text-align: center" method="post" name="form">
+                -->
+
+                <form name="submitForm">
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="model" />
+                    <input type="hidden" name="texture" />
+                    <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
+                    <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
+                    <select name="category" value="" class="form-control">
+                        <option selected disabled value="choose">--Category--</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="books">Books</option>
+                        <option value="music">Music</option>
+                        <option value="electronics">Electronics</option>
+                    </select> &nbsp
+                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
+                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
+                    <input name="model" value="" type="hidden" class="form-control" placeholder="Model"> &nbsp
+                    <input name="texture" value="" type="hidden" class="form-control" placeholder="Texture"> &nbsp
+                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
+                </form>
+                <div class="modal-footer">
+                           <!-- <button class="btn btn-default" id="sendAjax">Submit</button> -->
+                </div>
+                <button class="btn btn-default" class="sendAjax" onclick="send_edit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="editModal" class="modal fade" role ="dialog">
+    <div class="modal-dialog modal-lg">
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Your Listings</h4>
+            </div>
+            <div class="modal-body">
+                <table border=0 cellspacing=0 cellpadding=0>
+                    <thead>
+                        <tr>
+                            <th>Category</th><th>Item</th><th>Price</th><th>Item Description</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class='existingItems'>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
 
 
