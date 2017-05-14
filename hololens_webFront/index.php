@@ -54,12 +54,12 @@ if ($_GET['editItem']) {
     <!-- For uploading images using jQuery -->
     <script type="text/javascript" src="./libs/jQFU/js/vendor/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="./libs/jQFU/js/jquery.iframe-transport.js"></script>
-    <script type="text/javascript" src="./libs/jQFU/js/jquery.fileupload.js"></script>
+    <script type="text/javascript" src="./libs/jQFU/js/jquery.fileupload.js?v=8"></script>
     <script type="text/javascript" src="./js/ajaxify.js"></script>
     <script type="text/javascript" src="./js/serialize.js"></script>
-    <script type="text/javascript" src="./js/fileupload.js"></script>
+    <script type="text/javascript" src="./js/fileupload.js?v=8"></script>
     <style>
-        @import "http://fonts.googleapis.com/css?family=Droid+Sans";
+        @import "https://fonts.googleapis.com/css?family=Droid+Sans";
         form{
         background-color:#fff
         }
@@ -303,7 +303,7 @@ if ($_GET['editItem']) {
                     <p>Nebula is an Augmented Reality platform giving Hololens users the ability to shop for various products. With the Hololens platform it gives users the opportunity to virtually touch, move, and position life-sized products around their current environment.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>This application and web store was .</p>
+                    <p>Nebula is a two-part shopping platform. The first part is the website (which you're currently on), where you submit and manage your listings for sale. The second part is the Nebula application, available for Microsoft Hololens. The Nebula application is where you can browse 3D models from your own home by using augmented reality.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
  
@@ -458,6 +458,12 @@ if ($_GET['editItem']) {
             $('#editItemModal input[name="model"]').val(model);
             $('#editItemModal input[name="texture"]').val(texture);
 
+            $('#viewModel').attr('href', model);
+            $('#viewTexture').attr('href', texture);
+
+            $('#viewModel').html('View');
+            $('#viewTexture').html('View');
+
 
         }
 
@@ -489,7 +495,21 @@ if ($_GET['editItem']) {
             $('#createbutton').click(function() {
                 populateItemList();
             })
+            var string = "<option selected='' disabled='' value='choose'>--Category--</option>";
+
+            $.getJSON('https://thingproxy.freeboard.io/fetch/http://40.71.214.175:5073/getcats/', function(data) {
+              $(data.Categories).each(function(index, val) {
+                string += "<option value='" + val + "'>" + jsUcfirst(val) + "</option>";
+              });
+
+              $('select[name="category"]').html(string);
+            });
+
         })
+        function jsUcfirst(string) 
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
         function addslashes(string) {
             return string.replace(/\\/g, '\\\\').
                 replace(/\u0008/g, '\\b').
@@ -518,15 +538,11 @@ if ($_GET['editItem']) {
                 <!--
                 <form enctype='application/json' style="text-align: center" method="post" name="form">
                 -->
-                <form name="submitForm">
+                <form name="submitForm" id="createNewListing">
                     <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
                     <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
                     <select name="category" value="" class="form-control">
-                        <option selected disabled value="choose">--Category--</option>
-                        <option value="furniture">Furniture</option>
-                        <option value="books">Books</option>
-                        <option value="music">Music</option>
-			            <option value="electronics">Electronics</option>
+                        <option selected disabled value="choose">--EMPTY--</option>
                     </select> &nbsp
                     <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
                     <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
@@ -611,11 +627,11 @@ if ($_GET['editItem']) {
 
                 <form name="submitForm">
                     <input type="hidden" name="id">
-                    <input type="hidden" name="model" />
-                    <input type="hidden" name="texture" />
+                    <input type="hidden" name="model" id="editModel"/>
+                    <input type="hidden" name="texture" id="editTexture"/>
                     <input name="seller" value="<?= $user['username'] ?>" type="text" class="form-control" placeholder="Username" disabled> &nbsp
                     <input name="email" value="<?= $user['email'] ?>" type="text" class="form-control" placeholder="Email" disabled> &nbsp
-                    <select name="category" value="" class="form-control">
+                    <select name="category" value="" class="form-control" disabled>
                         <option selected disabled value="choose">--Category--</option>
                         <option value="furniture">Furniture</option>
                         <option value="books">Books</option>
@@ -628,6 +644,9 @@ if ($_GET['editItem']) {
                     <input name="texture" value="" type="hidden" class="form-control" placeholder="Texture"> &nbsp
                     <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
                 </form>
+                <h2>Images</h2>
+                Model: <a id='viewModel' target="_blank">View</a> - <a href='#' id='updateModel' onclick="jQuery('#fileupload').trigger('click');">Update</a><br>
+                Texture: <a id='viewTexture' target="_blank">View</a> - <a href='#' id='updateTexture' onclick="jQuery('#textureupload').trigger('click');">Update</a><br><br>
                 <div class="modal-footer">
                            <!-- <button class="btn btn-default" id="sendAjax">Submit</button> -->
                 </div>

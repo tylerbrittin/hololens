@@ -4,7 +4,7 @@ require_once './lib/header.php';
 
 //Redirect to index if already logged in
 if(is_logged_in()) {
-    redirect('/index.php');
+    redirect('index.php');
 }
 
 if(is_post_request()) {
@@ -12,10 +12,10 @@ if(is_post_request()) {
     $password = $_POST['password'];
     $info = verify_user($username, $password);
     if(is_null($info) || ($info->Password !== $password)) {
-        redirect('/login.php?error=mismatch');
+        redirect('login.php?error=mismatch');
     } else {
         log_in($info->Username, $info->Email);
-        redirect('/index.php');
+        redirect('index.php');
     }
 }
 
@@ -25,7 +25,7 @@ if(is_post_request()) {
 <head>
   <meta charset="UTF-8">
   <title>Sign-Up/Login Form</title>
-  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
   
@@ -72,7 +72,7 @@ if(is_post_request()) {
                   </div>
               <?php endif; ?>
 
-              <p class="forgot"><a href="#">Forgot Password?</a></p>
+              <!-- <p class="forgot"><a href="#">Forgot Password?</a></p> -->
 
               <button class="button button-block"/>Log In</button>
 
@@ -81,7 +81,7 @@ if(is_post_request()) {
       </div>
       
 </div> <!-- /form -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script src="./js/login.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="./js/login.js?v=2"></script>
 </body>
 </html>

@@ -38,18 +38,31 @@ jQuery(document).ready(function() {
         jQuery('input[name=seller]').on("change", updateUsername);
 
         //This is triggered when we click on the submit button
-        jQuery("#sendAjax").click(function(){
+        jQuery("#sendAjax").click(function(e){
+            if (
+                !$('select[name="category"]').val() ||
+                !$('input[name="item"]').val() ||
+                !$('input[name="itemdesc"]').val() ||
+                !$('input[name="price"]').val() ||
+                !$('input[name="texturename"]').val() ||
+                !$('input[name="filename"]').val()
+                ) {
+                    alert('Please complete all fields');
+                    e.PreventDefault();
+                    return false;
+            }
+
             var form = document.forms['submitForm'];
             //e.preventDefault();
 
             //Please put here your API URL
-            var API_URL = 'http://40.71.214.175:5073/additem';
+            var API_URL = 'https://thingproxy.freeboard.io/fetch/http://40.71.214.175:5073/additem';
 
             //Retrieve the model's name and put it in the model input
             jQuery('input[name=model]').val(jQuery("#imageName").val());
             //Update the texture filename
             jQuery('input[name=texture]').val(jQuery("#textureName").val());
-
+            
             //collect the form data
             var data = {};
             for (var i = 0, ii = form.length; i <ii; ++i) {
@@ -80,6 +93,11 @@ jQuery(document).ready(function() {
                 }
             });
 
+            $('#createNewListing')[0].reset();
+            $('#createModal').modal('hide');
+            $('#progress, #progressx').css('width', '0px');
+            $('#texName').html('');
+            $('#modelName').html('');
         });
 
         //File Upload for the model
@@ -96,6 +114,7 @@ jQuery(document).ready(function() {
         //'use strict';
         // Change this to the location of your server-side upload handler:
         var url = './upload_image.php';
+        
 
         jQuery('#fileupload').fileupload({
             url: url,
@@ -111,8 +130,11 @@ jQuery(document).ready(function() {
 
 
                     jQuery("#imageName").val(image_src);
+                    jQuery('#editModel').val(image_src);
                     jQuery("#modelName").html(original);
 
+                    jQuery('#viewModel').attr('href', image_src);
+                    jQuery('#viewModel').html(original);
                    
 
                 });
@@ -130,6 +152,7 @@ jQuery(document).ready(function() {
         //'use strict';
         // Change this to the location of your server-side upload handler:
         var url = './upload_texture.php';
+        
 
         jQuery('#textureupload').fileupload({
             url: url,
@@ -143,7 +166,12 @@ jQuery(document).ready(function() {
                     original    = image_src.replace('_tex_'+jQuery('input[name=seller]').val(), '');
 
                     jQuery("#textureName").val(image_src);
+                    jQuery('#editTexture').val(image_src);
+
                     jQuery("#texName").html(original);
+
+                    jQuery('#viewTexture').html(original);
+                    jQuery('#viewTexture').attr('href', image_src);
                 });
             },
             progressall: function (e, data) {

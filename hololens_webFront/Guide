@@ -1,6 +1,0 @@
-
-
-A somehow MVC architecture must be placed or starts taking place to allow the script to extend in a modular way without getting a spaghetti nested code that will be a challenge to decipher.
-
-Creating Folder "core" to have the core PHP classes.
-Creating folder "libs" to have all external PHP frameworks/libs from 3rd party open source projects
