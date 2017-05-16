@@ -27,8 +27,15 @@ type Check struct {
   Taken     bool
 }
 
+// Struct for deleting an item
+type ItemDel struct {
+  Seller    string
+  Category  string
+  ID        string
+}
+
 var simpItems []Simple
-var userIts []Simple
+var userIts []Item
 var detItem Item
 var postItem Item
 var cats Cats
@@ -36,6 +43,9 @@ var users Cats
 var newCat NewCat
 var user UserInfo
 var postUser UserInfo
+var toDelete ItemDel
+var toEdit EItem
+var contactForm ContactForm
 
 // Index Handler
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -119,6 +129,80 @@ func AddItem(w http.ResponseWriter, r *http.Request) {
     SendResponse(w, res)
   } else {
     log.Println("INFO: JSON successfully inserted") 
+    SendResponse(w, res)
+  }
+}
+
+// Handler for deleting an Item
+func DeleteItem(w http.ResponseWriter, r *http.Request) {
+
+  // Read Body of POST
+  body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+  if err != nil {
+    log.Println("ERROR: Cannot read body from POST request!")
+  }
+
+  // Close Body
+  if err := r.Body.Close(); err != nil {
+    log.Println("ERROR: Cannot close body of the POST request!")
+  }
+
+  // Process JSON
+  if err := json.Unmarshal(body, &toDelete); err != nil {
+    w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+    w.WriteHeader(422)
+    if err := json.NewEncoder(w).Encode(err); err != nil {
+      log.Println("ERROR: JSON gotten from POST request is unprocessable!")
+    }
+  }
+
+  // Delete Item from MongoDB
+  session := GetSession()
+  res := DeleteRecord(session, toDelete)
+ 
+  // Return appropriate HTTP code
+  if res == true {
+    log.Println("ERROR: Failed to delete Item from Mongo!")
+    SendResponse(w, res)
+  } else {
+    log.Println("INFO: Item successfully deleted")
+    SendResponse(w, res)
+  }
+}
+
+// Handler for editing an Item
+func EditItem(w http.ResponseWriter, r *http.Request) {
+  
+  // Read Body of POST
+  body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+  if err != nil {
+    log.Println("ERROR: Cannot read body from POST request!")
+  }
+
+  // Close Body
+  if err := r.Body.Close(); err != nil {
+    log.Println("ERROR: Cannot close body of the POST request!")
+  }
+
+  // Process JSON
+  if err := json.Unmarshal(body, &toEdit); err != nil {
+    w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+    w.WriteHeader(422)
+    if err := json.NewEncoder(w).Encode(err); err != nil {
+      log.Println("ERROR: JSON gotten from POST request is unprocessable!")
+    }
+  }
+
+  // Edit Item in MongoDB
+  session := GetSession()
+  res := EditRecord(session, toEdit)
+
+  // Return appropriate HTTP code
+  if res == true {
+    log.Println("ERROR: Failed to delete Item from Mongo!")
+    SendResponse(w, res)
+  } else {
+    log.Println("INFO: Item successfully deleted")
     SendResponse(w, res)
   }
 }
@@ -285,6 +369,43 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
   // Insert user in Mongo
   session := GetSession()
   res := InsertUser(session, postUser)
+
+  // Return appropriate HTTP code
+  if res == true {
+    log.Println("ERROR: Failed to insert JSON into Mongo!")
+    SendResponse(w, res)
+  } else {
+    log.Println("INFO: JSON successfully inserted")
+    SendResponse(w, res)
+  }
+}
+
+// Handler for Submitting a Contact form
+func ContactUs(w http.ResponseWriter, r *http.Request) {
+  
+   // Read Body of POST
+  body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+  if err != nil {
+    log.Println("ERROR: Cannot read body from POST request!")
+  }
+
+  // Close Body
+  if err := r.Body.Close(); err != nil {
+    log.Println("ERROR: Cannot close body of the POST request!")
+  }
+
+  // Process JSON
+  if err := json.Unmarshal(body, &contactForm); err != nil {
+    w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+    w.WriteHeader(422)
+    if err := json.NewEncoder(w).Encode(err); err != nil {
+      log.Println("ERROR: JSON gotten from POST request is unprocessable!")
+    }
+  }
+
+  // Insert Contact Form
+  session := GetSession()
+  res := InsertContact(session, contactForm)
 
   // Return appropriate HTTP code
   if res == true {

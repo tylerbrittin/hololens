@@ -4,7 +4,7 @@ import (
   "gopkg.in/mgo.v2"
   "gopkg.in/mgo.v2/bson"
   "log"
-  "os"
+  "os" 
 )
 
 // Struct for a detailed Nebula object
@@ -20,10 +20,24 @@ type Item struct {
   Texture       string
 }
 
+// Struct for an Item being Edited
+type EItem struct {
+  ID            string
+  Category      string
+  Item          string
+  ItemDesc      string
+  Seller        string
+  Email         string
+  Price         string
+  Model         string
+  Texture       string
+}
+
 // Struct for a simple Nebula object
 type Simple struct {
   ID            bson.ObjectId `bson:"_id,omitempty"`
   Item          string
+  Category      string
   Model         string
   Texture       string
 }
@@ -47,6 +61,13 @@ type UserAddition struct {
   Email         string
 }
 
+// Struct for Contact Form
+type ContactForm struct {
+  Username      string
+  Phone         string
+  Email         string
+  Message       string
+}
 
 // Get a MongoDB session
 func GetSession() *mgo.Session {
@@ -134,11 +155,93 @@ func InsertItem(s *mgo.Session, i Item) bool {
 
   c := s.DB("nebula").C(collName)
 
+  mID := bson.NewObjectId()
+  i.ID = mID 
+
   err := c.Insert(i)
 
   res := false
   if err != nil {
     res = true
+    return res
+  }
+
+  c = s.DB("users").C(i.Seller)
+  err = c.Insert(i)
+
+  res = false
+  if err != nil {
+    res = true
+  }
+
+  return res
+}
+// Delete an Item from MongoDB
+func DeleteRecord(s *mgo.Session, del ItemDel) bool {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!");
+    os.Exit(1)
+  }
+
+  collName := del.Category
+  username := del.Seller
+  mID := bson.ObjectIdHex(del.ID)
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("nebula").C(collName)
+  err := c.Remove(bson.M{"_id": mID})
+  
+  res := false
+  if err != nil {
+    res = true
+    return res
+  }
+
+  c = s.DB("users").C(username)
+  err = c.Remove(bson.M{"_id": mID})
+
+  res = false
+  if err != nil {
+    res = true
+    return res
+  }
+
+  return res
+}
+
+// Edit an Item in MongoDB
+func EditRecord(s *mgo.Session, ei EItem) bool {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!");
+    os.Exit(1)
+  }
+
+  collName := ei.Category
+  username := ei.Seller
+  mID := bson.ObjectIdHex(ei.ID)
+  querier := bson.M{"_id": mID}
+  change := bson.M{"$set": ei}
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("nebula").C(collName)
+  err := c.Update(querier, change)
+  
+  res := false
+  if err != nil {
+    res = true
+    return res
+  }
+
+  c = s.DB("users").C(username)
+  err = c.Update(querier, change)
+
+  if err != nil {
+    res = true
+    return res
   }
 
   return res
@@ -189,7 +292,7 @@ func GetUser(s *mgo.Session, name string) UserInfo {
 }
 
 // Function to get all items for sale by a user
-func UserItems(s *mgo.Session, name string) []Simple {
+func UserItems(s *mgo.Session, name string) []Item {
   if s == nil {
     log.Println("FATAL: Can not access MongoDB! Application Closing!")
     os.Exit(1)
@@ -200,7 +303,7 @@ func UserItems(s *mgo.Session, name string) []Simple {
 
   c := s.DB("users").C(name)
 
-  var results []Simple 
+  var results []Item
   err := c.Find(bson.M{"_id": bson.M{"$not": bson.RegEx{`userInfo`, ""}}}).All(&results) 
 
   if err != nil {
@@ -251,6 +354,28 @@ func InsertUser(s *mgo.Session, u UserInfo) bool {
   ua.Email = u.Email
 
   err := c.Insert(ua)
+
+  res := false
+  if err != nil {
+    res = true
+  }
+
+  return res
+}
+
+// Insert new Contact Form
+func InsertContact(s *mgo.Session, cf ContactForm) bool {
+  if s == nil {
+    log.Println("FATAL: Can not access MongoDB! Application Closing!")
+    os.Exit(1)
+  }
+
+  defer s.Close()
+  s.SetMode(mgo.Monotonic, true)
+
+  c := s.DB("contact").C("forms")
+
+  err := c.Insert(cf)
 
   res := false
   if err != nil {

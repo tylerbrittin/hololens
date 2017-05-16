@@ -37,6 +37,18 @@ var routes = Routes{
     GetItems,
   },
   Route{
+    "DeleteItem",
+    "POST",
+    "/deleteitem",
+    DeleteItem,
+  },
+  Route{
+    "EditItem",
+    "POST",
+    "/edititem",
+    EditItem,
+  },
+  Route{
     "GetCats",
     "GET",
     "/getcats",
@@ -71,5 +83,11 @@ var routes = Routes{
     "POST",
     "/adduser",
     AddUser,
+  },
+  Route{
+    "ContactUs",
+    "POST",
+    "/contactus",
+    ContactUs,
   },
 }

@@ -2,6 +2,14 @@ FOR ADDING AN ITEM
 ==================
 curl -H "Content-Type: application/json" -d '{ "category" : "electronics", "seller" : "Mr. Electronic", "price" : "$300", "model" : "model_mod_username", "texture": "texture_tex_username", "email" : "newemail@newemail", "item" : "example TV", "itemdesc" : "used" }' localhost:5073/additem
 
+FOR DELETING AN ITEM
+====================
+curl -H "Content-Type: application/json" -d '{ "seller" : "timmonfette", "category" : "electronics", "id" : "590a3cc6679005ebde96c4f5"  }' localhost:5073/deleteitem
+
+FOR EDITING AN ITEM
+===================
+curl -H "Content-Type: application/json" -d '{ "id" : "590a44b7679005f08393c5c4", "category" : "electronics", "seller" : "timmonfette", "price" : "$450", "model" : "model_mod_username", "texture": "texture_tex_username", "email" : "newemail@newemail", "item" : "example TV", "itemdesc" : "slightly used" }' localhost:5073/edititem
+
 FOR ADDING A CATEGORY
 =====================
 curl -H "Content-Type: application/json" -d '{ "name" : "testColl" }' localhost:5073/addcat
@@ -9,3 +17,7 @@ curl -H "Content-Type: application/json" -d '{ "name" : "testColl" }' localhost:
 FOR ADDING A USER
 =================
 curl -H "Content-Type: application/json" -d '{ "username" : "tylerbrittin", "password" : "badpass", "firstname" : "Tyler", "lastname" : "Brittin", "email" : "brittin.tyler@email.com" }' localhost:5073/adduser
+
+FOR SUBMITTING A CONTACT US FORM
+================================
+curl -H "Content-Type: application/json" -d '{ "username" : "timmonfette", "phone" : "testNum", "email" : "test@test.com", "message" : "Testing endpoint" }' localhost:5073/contactus
