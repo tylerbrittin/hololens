@@ -1,7 +1,5 @@
 <?php
 
- 
-
 require_once './libs/UploadHandler.php';
 
 define('UPLOAD_DIR',	getcwd().'/uploads/');

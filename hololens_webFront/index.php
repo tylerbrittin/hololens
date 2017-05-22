@@ -1,8 +1,11 @@
 <?php
 
-require_once './lib/header.php';
 
-//Redirect to login if not logged in (login is required)
+require_once __DIR__.'/lib/session.php';
+require_once __DIR__.'/lib/util.php';
+require_once __DIR__.'/lib/api.php';
+
+//Redirect to login if not logged in 
 if(!is_logged_in()) {
     redirect('login.php');
 }
@@ -54,10 +57,9 @@ if ($_GET['editItem']) {
     <!-- For uploading images using jQuery -->
     <script type="text/javascript" src="./libs/jQFU/js/vendor/jquery.ui.widget.js"></script>
     <script type="text/javascript" src="./libs/jQFU/js/jquery.iframe-transport.js"></script>
-    <script type="text/javascript" src="./libs/jQFU/js/jquery.fileupload.js?v=8"></script>
-    <script type="text/javascript" src="./js/ajaxify.js"></script>
-    <script type="text/javascript" src="./js/serialize.js"></script>
-    <script type="text/javascript" src="./js/fileupload.js?v=8"></script>
+    <script type="text/javascript" src="./libs/jQFU/js/jquery.fileupload.js?v=9"></script>
+    
+    <script type="text/javascript" src="./js/fileupload.js?v=9"></script>
     <style>
         @import "https://fonts.googleapis.com/css?family=Droid+Sans";
         form{
@@ -239,53 +241,7 @@ if ($_GET['editItem']) {
                 <br />
 
 
-                  <!--  <h2> OR <h2>
-                   
-                    <h3>Select a category</h2>
-
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#Furniture" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/couch.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-
-
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#books" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/book.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-
-            
-        
-
-            <div class="row">
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#Music" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/instruments.jpg" class="img-responsive" alt="">
-                    </a>
-                </div>
-            </div>
-        </div>-->
+                 
 
     </section>
 
@@ -303,7 +259,7 @@ if ($_GET['editItem']) {
                     <p>Nebula is an Augmented Reality platform giving Hololens users the ability to shop for various products. With the Hololens platform it gives users the opportunity to virtually touch, move, and position life-sized products around their current environment.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>Nebula is a two-part shopping platform. The first part is the website (which you're currently on), where you submit and manage your listings for sale. The second part is the Nebula application, available for Microsoft Hololens. The Nebula application is where you can browse 3D models from your own home by using augmented reality.</p>
+                    <p>Nebula is a two-part shopping platform. The first part is the website (which you're currently on), where you submit and manage your listings for sale. Part two is the Nebula application, available for Microsoft Hololens. The Nebula application is where you can browse 3D models from your own home by using augmented reality.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
  
@@ -378,6 +334,7 @@ if ($_GET['editItem']) {
                             <br>Philadelphia, PA 19104</p>
                     </div>
                     <div class="footer-col col-md-4">
+                        <!--
                         <h3>Around the Web</h3>
                         <ul class="list-inline">
                             <li>
@@ -401,6 +358,7 @@ if ($_GET['editItem']) {
                         <h3>About Nebula</h3>
                         <p>Nebula is a free to use, open source application . <a href="http://startbootstrap.com">Insert Team Website</a>.</p>
                     </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -441,7 +399,7 @@ if ($_GET['editItem']) {
     <!-- Theme JavaScript -->
     <script src="js/freelancer.min.js"></script>
 
-    <script src="script.js"></script>
+    
     <script>
 
         function edit_item(id, category, seller, price, model, texture, email, item, itemdesc) {
@@ -478,11 +436,19 @@ if ($_GET['editItem']) {
 
         function populateItemList() {
             $.getJSON('https://thingproxy.freeboard.io/fetch/http://40.71.214.175:5073/getuseritems/<?= $user['username'] ?>', function(data) {
+                $('#existingItemsTable').show();
+                $('#noExistingItems').hide();
+
                 $('.existingItems').html('');
-                $(data).each(function(index, val) {
-                    $('.existingItems').append("<tr><td>" + val.Category + "</td><td>" + val.Item + "</td><td>" + val.Price + "</td><td>" + val.ItemDesc + "</td><td><a href='#' onclick='edit_item(\"" + addslashes(val.ID) + "\", \"" + addslashes(val.Category) + "\", \"" + addslashes(val.Seller) + "\", \"" + addslashes(val.Price) + "\", \"" + addslashes(val.Model) + "\", \"" + addslashes(val.Texture) + "\", \"" + addslashes(val.Email) + "\", \"" + addslashes(val.Item) + "\", \"" + addslashes(val.ItemDesc) + "\")'>edit</a> - <a href='#' onclick='deleteItem(\"" + val.Seller + "\", \"" + val.Category + "\", \"" + val.ID + "\")'>delete</a>")
-                    //$('.existingItems').append("<li>" + val.Category + " - " + val.Item + " - <a href='#' onclick='edit_item(\"" + addslashes(val.ID) + "\", \"" + addslashes(val.Category) + "\", \"" + addslashes(val.Seller) + "\", \"" + addslashes(val.Price) + "\", \"" + addslashes(val.Model) + "\", \"" + addslashes(val.Texture) + "\", \"" + addslashes(val.Email) + "\", \"" + addslashes(val.Item) + "\", \"" + addslashes(val.ItemDesc) + "\")'>edit</a> - <a href='#' onclick='deleteItem(\"" + val.Seller + "\", \"" + val.Category + "\", \"" + val.ID + "\")'>delete</a></li>");
-                })
+                if (!data) {
+                    $('#existingItemsTable').hide();
+                    $('#noExistingItems').show();
+                } else {
+                    $(data).each(function(index, val) {
+                        $('.existingItems').append("<tr><td>" + val.Category + "</td><td>" + val.Item + "</td><td>" + val.Price + "</td><td>" + val.ItemDesc + "</td><td><a href='#' onclick='edit_item(\"" + addslashes(val.ID) + "\", \"" + addslashes(val.Category) + "\", \"" + addslashes(val.Seller) + "\", \"" + addslashes(val.Price) + "\", \"" + addslashes(val.Model) + "\", \"" + addslashes(val.Texture) + "\", \"" + addslashes(val.Email) + "\", \"" + addslashes(val.Item) + "\", \"" + addslashes(val.ItemDesc) + "\")'>edit</a> - <a href='#' onclick='deleteItem(\"" + val.Seller + "\", \"" + val.Category + "\", \"" + val.ID + "\")'>delete</a>");
+                    })
+                }
+
             })
         }
 
@@ -552,10 +518,7 @@ if ($_GET['editItem']) {
                 </form>
 
                 <h2> Image Upload </h2>
-                <!--<form enctype = "multipart/form-data" action="uploaded.php" method="post">
-                    Only JPEG, PNG, JPG types allowed. .
-                    <br/><br/>
-                    <!--<div id="filediv"><input name="file[]" type="file" id="file"/></div>-->
+                
                 <br/>
 
                 <div class="form-group">
@@ -593,12 +556,7 @@ if ($_GET['editItem']) {
                         <div id="texturefiles" class="files"></div>
                     </div>
                 </div>
-                <!-- <input type="button" id="add_more" class="upload" value="Add More Files"/>-->
-                <!--<input type="submit" value="Upload File" name="uploadimage" id="upload" class="upload"/>-->
-                <!--</form>-->
-
-                <!--- Including PHP Script -->
-                <?php /*include "upload.php";*/ ?>
+                
 
 
                 <div class="modal-footer">
@@ -621,10 +579,7 @@ if ($_GET['editItem']) {
             </div>
             <div class="modal-body">
                 <div style="text-align: left"> 
-                <!--
-                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                -->
-
+                
                 <form name="submitForm">
                     <input type="hidden" name="id">
                     <input type="hidden" name="model" id="editModel"/>
@@ -666,7 +621,7 @@ if ($_GET['editItem']) {
                 <h4 class="modal-title">Your Listings</h4>
             </div>
             <div class="modal-body">
-                <table border=0 cellspacing=0 cellpadding=0>
+                <table border=0 cellspacing=0 cellpadding=0 id="existingItemsTable">
                     <thead>
                         <tr>
                             <th>Category</th><th>Item</th><th>Price</th><th>Item Description</th><th>Actions</th>
@@ -676,224 +631,10 @@ if ($_GET['editItem']) {
                         
                     </tbody>
                 </table>
+                <h4 id="noExistingItems" style="text-align: center">No Listings</h4>
             </div>
             <div class="modal-footer">
             </div>
         </div>
     </div>
 </div>
-
-
-<div id="createModala" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New account</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                    <input name="name" value="" type="text" class="form-control" placeholder="First and Last Name"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
-                                    <input name="pw" value="" type="password" class="form-control" placeholder="Password"> &nbsp
-                                    <input name="pw2" value="" type="password" class="form-control" placeholder="Confirm password"> &nbsp
-                                    &nbsp
-                                    
-
-                              <!--  <form id="upload" action="upload.php" method="POST" enctype="multipart/form-data">
-                                    <fieldset>
-
-                                        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
-
-                                        <div>
-                                            <label for="fileselect">Files to upload:</label>
-                                            <input type="file" id="fileselect" name"fileselect[]" multiple="multiple" />
-                                            <div id="filedrag">or drop files here</div>
-                                        </div>
-
-                                        <div id="submitbutton">
-                                            <button type="submit">Upload Files</button>
-                                    </fieldset>
-                                </form>
-
-                                <div id="messages">
-                                    <p>Status</p>
-                                </div>
-
-                                <style>
-                                #filedrag
-                                {
-                                    display: none;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    padding: 1em 0;
-                                    margin: 1em 0;
-                                    color: #555;
-                                    border: 2px dashed #555;
-                                    border-radius: 7px;
-                                    cursor: default;
-                                }
-
-                                #filedrag.hover
-                                {
-                                    color: #f00;
-                                    border-color: #f00;
-                                    border-style: solid;
-                                    box-shadow: inset 0 3px 4px #888;
-                                }
-
-                                </style>-->
-
-                                <div class="modal-footer">
-                                    <button class="btn btn-default">Create</button>
-                                </div>
-                                </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-
-<!--<div id="createModalF" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content-
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New Furniture Listing</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
-                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
-                                    <select name="category" value="" class="form-control">
-                                        <option selected disabled value="choose">Furniture</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="books">Books</option>
-                                        <option value="music">Music</option>
-                                    </select> &nbsp
-                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
-                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
-                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
-
-                                <div class="modal-footer">
-                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
-                                </div>
-                                </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-
-<div id="createModalB" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content--
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New Book Listing</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
-                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
-                                    <select name="category" value="" class="form-control">
-                                        <option selected disabled value="choose">Books</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="books">Books</option>
-                                        <option value="music">Music</option>
-                                    </select> &nbsp
-                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
-                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
-                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
-
-                                <div class="modal-footer">
-                                    <button name="submit" onclick ="onsubmit()" class="btn btn-default">Submit</button>
-                                </div>
-                                </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-
-<div id="createModalM" class="modal fade" role ="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!--Modal content--
-                    <div class="modal-content">
-                        <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Create New Music Listing</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div style="text-align: left">
-
-                                <form enctype='application/json' style="text-align: center" method="post" name="form">
-                                    <input name="firstname" value="" type="text" class="form-control" placeholder="First Name"> &nbsp
-                                    <input name="lastname" value="" type="text" class="form-control" placeholder="Last Name"> &nbsp
-                                    <input name="email" value="" type="text" class="form-control" placeholder="Email"> &nbsp
-                                    <select name="category" value="" class="form-control">
-                                        <option selected disabled value="choose">Music</option>
-                                        <option value="furniture">Furniture</option>
-                                        <option value="books">Books</option>
-                                        <option value="music">Music</option>
-                                    </select> &nbsp
-                                    <input name="item" value="" type="text" class="form-control" placeholder="Item Name"> &nbsp
-                                    <input name="itemdesc" value="" type="text" class="form-control" placeholder="Item Description"> &nbsp
-                                    <input name="price" value="" type="text" class="form-control" placeholder="Price ($00.00)"> &nbsp
-
-                                <div class="modal-footer">
-                                    <button  onclick ="onsubmit()" class="btn btn-default">Submit</button>
-                                </div>
-                                </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div> -->
-
-<script src="js/json.js"></script>
-<!--<script src="js/filedrag.js"></script>-->
-
-                <!-- <script>
-                                var form = document.forms['form'];
-
-                                form.onsubmit = function (e) {
-                                    //stop regular form submission
-                                    e.preventDefault();
-
-                                    //collect the form data 
-                                    var data = {};
-                                    for (var i = 0, ii = form.length; i <ii; ++i) {
-                                        var input = form[i];
-                                        if (input.name) {
-                                            data[input.name] = input.value;
-                                        }
-                                    }
-
-                                    //construct an HTTP request
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open(form.method, form.action, true);
-                                    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-                                    //send the collected data as JSON
-                                    xhr.send(JSON.stringify(data));
-
-                                    console.log(JSON.stringify(data));
-
-                                    xhr.onloadend = function () {
-                                        //done
-                                    };
-                                };
-
-                </script>-->

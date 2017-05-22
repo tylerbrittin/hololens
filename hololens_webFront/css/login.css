@@ -18,11 +18,11 @@ a {
   transition: .5s ease;
 }
 a:hover {
-  color: #179b77;
+  color: #2350bc;
 }
 
 .form {
-  background:#233140;
+  background:#364351;
   padding: 40px;
   max-width: 600px;
   margin: 40px auto;
@@ -55,11 +55,11 @@ a:hover {
   transition: .5s ease;
 }
 .tab-group li a:hover {
-  background: #179b77;
+  background: #2350bc;
   color: #ffffff;
 }
 .tab-group .active a {
-  background: #1ab188;
+  background: #07294d;
   color: #ffffff;
 }
 
@@ -88,7 +88,7 @@ label {
 }
 label .req {
   margin: 2px;
-  color: #1ab188;
+  color: #e1f22b;
 }
 
 label.active {
@@ -113,7 +113,7 @@ input, textarea {
   padding: 5px 10px;
   background: none;
   background-image: none;
-  border: 1px solid #a0b3b0;
+  border: 1px solid #2350bc
   color: #ffffff;
   border-radius: 0;
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
@@ -121,17 +121,17 @@ input, textarea {
 }
 input:focus, textarea:focus {
   outline: 0;
-  border-color: #1ab188;
+  border-color: #e1f22b;
 }
 
 textarea {
-  border: 2px solid #a0b3b0;
+  border: 2px solid #2350bc;
   resize: vertical;
 }
 
 .field-wrap {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 }
 
 .top-row:after {
@@ -157,14 +157,14 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #1ab188;
+  background: #07294d;
   color: #ffffff;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
 }
 .button:hover, .button:focus {
-  background: #179b77;
+  background: #2350bc;
 }
 
 .button-block {

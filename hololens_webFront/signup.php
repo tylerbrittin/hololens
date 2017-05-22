@@ -1,6 +1,11 @@
 <?php
 
-require_once './lib/header.php';
+
+
+require_once __DIR__.'/lib/session.php';
+require_once __DIR__.'/lib/util.php';
+require_once __DIR__.'/lib/api.php';
+
 
 //Redirect to index if already logged in
 if(is_logged_in()) {

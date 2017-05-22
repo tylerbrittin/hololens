@@ -5,39 +5,13 @@ function updateUsername(){
 
 jQuery(document).ready(function() {
 
-    /*jQuery('#submitDummy').click(function() {
-        var API_URL = 'http://40.121.206.106:5073/additem';
-        var apiData = JSON.stringify({Category: "furniture", Item: "example lamp", ItemDesc: "itworks", Seller: "Mr. Lamp", Email: "newemail@newemail.com", Price: "$5", Model: "lamp_mod_username", Texture: "something_new"});
-
-        //JSON.stringify(apiData);
-        console.log(apiData);
-
-        jQuery.post(API_URL, apiData, function(data){console.log(data); return false;});
-
-        jQuery.ajax({
-            url: API_URL,
-            type: 'POST',
-            crossDomain: true,
-            data: JSON.stringify({Category: "furniture", Item: "example lamp", ItemDesc: "use", Seller: "Mr. Lamp", Email: "newemail@newemail.com", Price: "$5", Model: "lamp_mod_username", Texture: "lamp_tex_username"}),//apiData,
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (response) {
-                //var resp = JSON.parse(response)
-                alert(resp.status);
-            },
-            error: function (xhr, status) {
-                alert("error");
-            }
-        });
-
-        return false;
-    });*/
+    
         //Assign the username to the suitable fields and make sure if something changes to update that
         jQuery('#modUsername').val(jQuery('input[name=seller]').val());
         jQuery('#texUsername').val(jQuery('input[name=seller]').val());
         jQuery('input[name=seller]').on("change", updateUsername);
 
-        //This is triggered when we click on the submit button
+        //This is triggered when we click on the submit button for create listing.
         jQuery("#sendAjax").click(function(e){
             if (
                 !$('select[name="category"]').val() ||
@@ -55,10 +29,10 @@ jQuery(document).ready(function() {
             var form = document.forms['submitForm'];
             //e.preventDefault();
 
-            //Please put here your API URL
+            
             var API_URL = 'https://thingproxy.freeboard.io/fetch/http://40.71.214.175:5073/additem';
 
-            //Retrieve the model's name and put it in the model input
+            //Update model filename
             jQuery('input[name=model]').val(jQuery("#imageName").val());
             //Update the texture filename
             jQuery('input[name=texture]').val(jQuery("#textureName").val());
@@ -72,7 +46,7 @@ jQuery(document).ready(function() {
                 }
             }
 
-            //var serialized = jQuery('form[name=submitForm]').serializeFormJSON();
+            
 
             jQuery.ajax({
                 url: API_URL,
@@ -111,8 +85,7 @@ jQuery(document).ready(function() {
         });
 
         
-        //'use strict';
-        // Change this to the location of your server-side upload handler:
+        
         var url = './upload_image.php';
         
 
@@ -124,7 +97,7 @@ jQuery(document).ready(function() {
                 jQuery.each(data.result.files, function (index, file) {
 
                     //Save the uploaded image file name to be used for later
-                    image_src   = 'http://www.nebulashop.net/uploads/'+file.name;
+                    image_src   = 'http://www.kieranplante.com/uploads/'+file.name;
                     original    = image_src.replace('_mod_'+jQuery('input[name=seller]').val(), '');
                     
 
@@ -149,8 +122,7 @@ jQuery(document).ready(function() {
         }).prop('disabled', !jQuery.support.fileInput)
             .parent().addClass(jQuery.support.fileInput ? undefined : 'disabled');
 
-        //'use strict';
-        // Change this to the location of your server-side upload handler:
+        
         var url = './upload_texture.php';
         
 
@@ -162,7 +134,7 @@ jQuery(document).ready(function() {
                 jQuery.each(data.result.files, function (index, file) {
 
                     //Save the uploaded image file name to be used for later
-                    image_src = 'http://www.nebulashop.net/uploads/'+file.name;
+                    image_src = 'http://www.kieranplante.com/uploads/'+file.name;
                     original    = image_src.replace('_tex_'+jQuery('input[name=seller]').val(), '');
 
                     jQuery("#textureName").val(image_src);
