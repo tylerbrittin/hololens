@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
-# Python Script to Test Nebula API
+# Main Python Script to Test Nebula API
 # Use all test cases documented in testCases.py
+#
+# Code written by:
+# Tim Monfette (tjm354)
 
 import testCases
 from subprocess import call
@@ -11,7 +14,11 @@ for case in testCases.CASES:
     testcase = "test"+case
     getattr(testCases, testcase)()
 
+# Print out final results
+print
+testCases.finalResults()
+
 # Clean up database back to working order
 print "\nTesting done, rebuilding database..."
-call(["/home/tim/goWorkspace/bin/rebuildDB"])
+call(["/opt/api/bin/rebuildDB"])
 print "Finished"
