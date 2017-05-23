@@ -5,7 +5,7 @@
  *
  * Copyright 2010, Sebastian Tschan
  * https://blueimp.net
- *
+ 
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
@@ -220,6 +220,8 @@ class UploadHandler
 
     protected function get_upload_path($file_name = null, $version = null) {
         $file_name = $file_name ? $file_name : '';
+        $file_name = str_replace(' ', '-', $file_name);
+
         if (empty($version)) {
             $version_path = '';
         } else {
@@ -1061,9 +1063,9 @@ class UploadHandler
 
         $name_extension        = substr($this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range), -4);
-        $name_base  = str_replace($name_extension, '', $this->get_file_name($uploaded_file, $name, $size, $type, $error,
-            $index, $content_range));
-        $file->name = $name_base.'_'.$_POST['type'].'_'.$_POST['username'].$name_extension;
+        $name_base  = str_replace(' ', '-', str_replace($name_extension, '', $this->get_file_name($uploaded_file, $name, $size, $type, $error,
+            $index, $content_range)));
+        $file->name = $name_base.'_'.$_POST['type'].'_'.$_POST['username']."_".date('d.H.i.s').$name_extension;
 
         $file->size = $this->fix_integer_overflow((int)$size);
         $file->type = $type;

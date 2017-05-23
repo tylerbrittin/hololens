@@ -1,6 +1,10 @@
 <?php
 
-require_once './lib/header.php';
+
+require_once __DIR__.'/lib/session.php';
+require_once __DIR__.'/lib/util.php';
+require_once __DIR__.'/lib/api.php';
+
 
 //Redirect to index if already logged in
 if(is_logged_in()) {
@@ -11,7 +15,7 @@ if(is_post_request()) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $info = verify_user($username, $password);
-    if(is_null($info) || ($info->Password !== $password)) {
+    if(is_null($info) || ($info->Password !== md5($password))) {
         redirect('login.php?error=mismatch');
     } else {
         log_in($info->Username, $info->Email);
@@ -72,7 +76,7 @@ if(is_post_request()) {
                   </div>
               <?php endif; ?>
 
-              <!-- <p class="forgot"><a href="#">Forgot Password?</a></p> -->
+              
 
               <button class="button button-block"/>Log In</button>
 

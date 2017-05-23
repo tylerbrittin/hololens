@@ -1,23 +1,25 @@
 <?php
 
 require_once __DIR__.'/../libs/httpful.phar';
-const API_HOST = "http://40.71.214.175:5073/";
+const API = "http://40.71.214.175:5073/";
 
 function check_username_availability($username) {
-    $uri = API_HOST."checkusername/".urlencode($username);
+    $uri = API."checkusername/".urlencode($username);
     $response = \Httpful\Request::get($uri)->send();
     return !$response->body->Taken;
 }
 
 function get_user_info($username) {
-    $uri = API_HOST."getuserinfo/".urlencode($username);
+    $uri = API."getuserinfo/".urlencode($username);
     $response = \Httpful\Request::get($uri)->send();
     return $response->body;
 }
 
 function verify_user($username, $password, $get_info = true) {
+    $password = md5($password);
     $info = get_user_info($username);
     if(!strlen($info->Username)) return false; //user does not exist
+
     if($get_info) {
         return $password === $info->Password ? $info : null;
     } else {
@@ -26,12 +28,12 @@ function verify_user($username, $password, $get_info = true) {
 }
 
 function create_user($user) {
-    $uri = API_HOST."adduser";
+    $uri = API."adduser";
     $response = \Httpful\Request::post($uri)
         ->sendsJson()
         ->body(json_encode([
             'Username' => $user['username'],
-            'Password' => $user['password'],
+            'Password' => md5($user['password']),
             'Firstname' => $user['first_name'],
             'Lastname' => $user['last_name'],
             'Email' => $user['email']
@@ -41,7 +43,7 @@ function create_user($user) {
 }
 
 function delete_item($seller, $category, $id) {
-    $uri = API_HOST."deleteitem";
+    $uri = API."deleteitem";
     $response = \Httpful\Request::post($uri)
         ->sendsJson()
         ->body(json_encode([
@@ -54,7 +56,7 @@ function delete_item($seller, $category, $id) {
 }
 
 function edit_item($email, $seller, $category, $item, $itemdesc, $price, $id, $model, $texture) {
-    $uri = API_HOST."edititem";
+    $uri = API."edititem";
     $response = \Httpful\Request::post($uri)
         ->sendsJson()
         ->body(json_encode([
