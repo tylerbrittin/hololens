@@ -1,6 +1,19 @@
+/* Creates all of the routes/endpoints serviced by
+ * the Nebula REST API.
+ *
+ * Code Written by:
+ * Tim Monfette (tjm354)
+*/
+
 package main
 
-import "net/http"
+import (
+  "net/http"
+  "nebulaHTTPGeneric"
+  "nebulaCats"
+  "nebulaUsers"
+  "nebulaItems"
+)
 
 type Route struct {
   Name        string
@@ -16,78 +29,78 @@ var routes = Routes{
     "Index",
     "GET",
     "/",
-    Index,
+    nebulaHTTPGeneric.Index,
   },
   Route{
     "AddObject",
     "POST",
     "/additem",
-    AddItem,
+    nebulaItems.AddItem,
   },
   Route{
     "AddCat",
     "POST",
     "/addcat",
-    AddCat,
+    nebulaCats.AddCat,
   },
   Route{
     "GetItems",
     "GET",
     "/getitems/{collName}",
-    GetItems,
+    nebulaItems.GetItems,
   },
   Route{
     "DeleteItem",
     "POST",
     "/deleteitem",
-    DeleteItem,
+    nebulaItems.DeleteItem,
   },
   Route{
     "EditItem",
     "POST",
     "/edititem",
-    EditItem,
+    nebulaItems.EditItem,
   },
   Route{
     "GetCats",
     "GET",
     "/getcats",
-    GetCats,
+    nebulaCats.GetCats,
   },
   Route{
     "GetDetails",
     "GET",
     "/getdetails/{collName}/{id}",
-    GetDetails,
+    nebulaItems.GetDetails,
   },
   Route{
     "GetUserInfo",
     "GET",
     "/getuserinfo/{username}",
-    GetUserInfo,
+    nebulaUsers.GetUserInfo,
   },
   Route{
     "GetUserItems",
     "GET",
     "/getuseritems/{username}",
-    GetUserItems,
+    nebulaUsers.GetUserItems,
   },
   Route{
     "CheckUsername",
     "GET",
     "/checkusername/{username}",
-    CheckUsername,
+    nebulaUsers.CheckUsername,
   },
   Route{
     "AddUser",
     "POST",
     "/adduser",
-    AddUser,
+    nebulaUsers.AddUser,
   },
   Route{
     "ContactUs",
     "POST",
     "/contactus",
-    ContactUs,
+    nebulaHTTPGeneric.ContactUs,
   },
 }

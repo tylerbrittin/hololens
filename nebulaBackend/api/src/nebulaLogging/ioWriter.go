@@ -1,4 +1,12 @@
-package main
+/* Handles all writing and maintaining of Nebula REST API Logs.
+ * Auto rotates logs (and timestamps old ones) on restart or
+ * when the log reaches 10 MB.
+ *
+ * Code Written by:
+ * Tim Monfette (tjm354)
+*/
+
+package nebulaLogging
 
 import (
   "os"

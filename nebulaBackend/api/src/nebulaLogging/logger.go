@@ -1,5 +1,11 @@
+/* Creates the logger and logging structure for all
+ * logged output from the Nebula REST API.
+ *
+ * Code Written by:
+ * Tim Monfette (tjm354)
+*/
 
-package main
+package nebulaLogging
 
 import (
   "log"
